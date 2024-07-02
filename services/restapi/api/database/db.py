@@ -3,22 +3,21 @@ from contextlib import contextmanager
 from typing import Any, Generator
 
 from api.settings import config
-from sqlalchemy import Engine, create_engine
-from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy.engine import Engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import Session, sessionmaker
 
 log: logging.Logger = logging.getLogger(__name__)
 
-
 # Base class for declarative class definitions
-class Base(DeclarativeBase):
-    pass
-
+Base = declarative_base()
 
 # Create an engine instance
 engine: Engine = create_engine(config.db.get_url(), echo=True)
 
 # Create a configured "Session" class
-SessionLocal: sessionmaker[Session] = sessionmaker(
+SessionLocal: sessionmaker = sessionmaker(
     autocommit=False, autoflush=False, bind=engine
 )
 
