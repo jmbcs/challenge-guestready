@@ -1,14 +1,101 @@
 import logging
+from datetime import datetime
+from typing import Optional
 
-from api.app.models import Developer, Game, Platform, Publisher
-from api.app.responses import create_game_responses
-from api.app.schemas import GameCreateResponse, GameSchema
-from api.database.db import get_db
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-router: APIRouter = APIRouter(tags=["GuestReady Challenge"], prefix="/guestready")
+from api.app.models import Developer, Game, Platform, Publisher
+from api.app.responses import create_game_responses, get_game_responses
+from api.app.schemas import GameCreateResponse, GameSchema
+from api.database.db import get_db
+
+router: APIRouter = APIRouter(tags=["Games"])
 logger: logging.Logger = logging.getLogger(__name__)
+
+
+@router.get("/games", response_model=list[GameSchema], responses=get_game_responses)
+async def get_games(
+    platform: Optional[str] = None,
+    release_date: Optional[str] = None,
+    genre: Optional[str] = None,
+    db: Session = Depends(get_db),
+) -> list[GameSchema]:
+    try:
+        query = db.query(Game)
+
+        if genre:
+            query = query.filter(Game.genre == genre)
+
+        if release_date:
+            query = query.filter(Game.release_date == release_date)
+
+        if platform:
+            query = query.join(Game.platform).filter(Platform.name == platform)
+
+        db_games = query.all()
+
+        if not db_games:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="No game found based on parameters",
+            )
+
+        games = [
+            GameSchema(
+                title=str(game.title),
+                genre=str(game.genre),
+                platform=str(game.platform.name),
+                developer=str(game.developer.name),
+                publisher=str(game.publisher.name),
+                release_date=datetime.strptime(str(game.release_date), "%Y-%m-%d"),
+            )
+            for game in db_games
+        ]
+
+        return games
+
+    except HTTPException as http_exc:
+        logger.error(f"HTTP error occurred: {http_exc.detail}")
+        raise http_exc
+
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
+
+
+@router.get("/games/{game_developer}", response_model=list[str])
+async def get_games_by_developer(
+    game_developer: str, db: Session = Depends(get_db)
+) -> list[Game]:
+    try:
+        # Query the developer from the database
+        developer: Developer | None = (
+            db.query(Developer).filter(Developer.name == game_developer).first()
+        )
+
+        # If developer not found, raise a 404 error
+        if not developer:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Developer not found"
+            )
+
+        # Retrieve the list of games developed by the developer
+        response: list[Game] = [game for game in developer.games]
+
+        return response
+
+    except HTTPException as http_exc:
+        logger.error(f"HTTP error occurred: {http_exc.detail}")
+        raise http_exc
+
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
 
 
 @router.post(
@@ -21,6 +108,7 @@ async def create_game(
     game: GameSchema, db: Session = Depends(get_db)
 ) -> GameCreateResponse:
     try:
+
         # VALIDATION - Check if the game already exists
         existing_game: Game | None = (
             db.query(Game)
@@ -89,9 +177,10 @@ async def create_game(
         db.refresh(new_game)
         logger.debug(f"Created new game: {new_game}")
 
-        return GameCreateResponse(
+        response: GameCreateResponse = GameCreateResponse(
             game=game,
         )
+        return response
 
     except HTTPException as http_exc:
         db.rollback()
