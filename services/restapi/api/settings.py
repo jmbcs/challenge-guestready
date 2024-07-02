@@ -7,7 +7,7 @@ from api.database.config import PostgresqlDBConfig
 from api.logger import LoggerConfig
 from pydantic_settings import BaseSettings, PydanticBaseSettingsSource
 
-_Config__SERVICE_PREFIX = "guestready__"
+_Config__SERVICE_PREFIX: str = "guestready__"
 
 
 class Settings(BaseSettings):
@@ -35,10 +35,10 @@ class Settings(BaseSettings):
             env_prefix (str): The prefix for environment variables.
         """
 
-        env_file = "restapi.env"
-        env_nested_delimiter = "__"
-        env_file_encoding = "utf-8"
-        env_prefix = _Config__SERVICE_PREFIX
+        env_file: str = "restapi.env"
+        env_nested_delimiter: str = "__"
+        env_file_encoding: str = "utf-8"
+        env_prefix: str = _Config__SERVICE_PREFIX
 
     @classmethod
     def settings_customise_sources(
@@ -71,4 +71,4 @@ class Settings(BaseSettings):
 
 
 # Create an instance of the Settings class
-config = Settings()  # type: ignore
+config: Settings = Settings()  # type: ignore

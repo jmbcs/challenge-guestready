@@ -1,7 +1,9 @@
 import logging
 from enum import Enum
+from logging import Formatter, Logger, StreamHandler
 
 import colorlog
+from colorlog import ColoredFormatter
 from pydantic import BaseModel
 
 
@@ -32,14 +34,14 @@ class LoggerConfig(BaseModel):
 
     def configure_logger(self):
         """Configure the root logger based on the provided configuration."""
-        logger = logging.getLogger()
+        logger: Logger = logging.getLogger()
         logger.setLevel(self.level.lvl())
-
+        stream_handler: StreamHandler = logging.StreamHandler()
         if self.enable_log_color:
             __COLOR_LOG_FORMAT = "%(log_color)s%(levelname)-8s%(reset)s \033[0;34m|  %(asctime)s - %(name)s.%(funcName)s() - %(lineno)s |\033[0m %(message)s"
             self.log_format = __COLOR_LOG_FORMAT
 
-            formatter = colorlog.ColoredFormatter(
+            color_formatter: ColoredFormatter = colorlog.ColoredFormatter(
                 self.log_format,
                 log_colors={
                     "DEBUG": "green",
@@ -52,9 +54,12 @@ class LoggerConfig(BaseModel):
                 style="%",
                 datefmt=self.date_format,
             )
-        else:
-            formatter = logging.Formatter(self.log_format, datefmt=self.date_format)
 
-        stream_handler = logging.StreamHandler()
-        stream_handler.setFormatter(formatter)
+            stream_handler.setFormatter(color_formatter)
+        else:
+            normal_formatter: Formatter = logging.Formatter(
+                self.log_format, datefmt=self.date_format
+            )
+            stream_handler.setFormatter(normal_formatter)
+
         logger.addHandler(stream_handler)
