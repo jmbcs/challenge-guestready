@@ -47,3 +47,37 @@ create_game_responses: dict[int | str, dict[str, Any]] = {
         },
     },
 }
+
+
+get_game_responses: dict[int | str, dict[str, Any]] = {
+    status.HTTP_200_OK: {
+        "description": "Found - Games returned from the database",
+        "content": {
+            "application/json": {
+                "example": {
+                    "message": "Game created successfully.",
+                    "game": {
+                        "title": "Example Game",
+                        "genre": "Action",
+                        "release_date": "2023-06-01",
+                        "platform": "PC",
+                        "publisher": "Example Publisher",
+                        "developer": "Example Developer",
+                    },
+                }
+            }
+        },
+    },
+    status.HTTP_404_NOT_FOUND: {
+        "description": "Not Found - No games have been found.",
+        "content": {
+            "application/json": {
+                "example": {
+                    "detail": {
+                        "message": "No game found based on parameters",
+                    },
+                }
+            }
+        },
+    },
+}
