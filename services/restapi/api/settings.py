@@ -1,11 +1,10 @@
 from typing import Tuple, Type
 
+from pydantic_settings import BaseSettings, PydanticBaseSettingsSource
+
 from api.app.config import APIConfig
 from api.database.config import PostgresqlDBConfig
-
-# from database.models import PostgresDBConfig
 from api.logger import LoggerConfig
-from pydantic_settings import BaseSettings, PydanticBaseSettingsSource
 
 _Config__SERVICE_PREFIX: str = "guestready__"
 
