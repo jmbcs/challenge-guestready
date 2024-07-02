@@ -47,4 +47,50 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
-      start_interval: 5s
+
+  api:
+    container_name: api
+    build:
+      context: ./services/restapi/.
+      dockerfile: Dockerfile
+    expose:
+      - 8000
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      guestready__api__auth__user: ${GUESTREADY__API_AUTH_USER?}
+      guestready__api__auth__password: ${GUESTREADY__API_AUTH_PASSWORD}
+      guestready__api__port: "8000"
+      guestready__logger__level: "DEBUG"
+      guestready__logger__enable_log_color: True
+      guestready__db__username: ${GUESTREADY__API_POSTGRES_USER?}
+      guestready__db__password: ${GUESTREADY__API_POSTGRES_PASSWORD?}
+      guestready__db__port: "5432"
+      guestready__db__database: ${GUESTREADY__API_POSTGRES_DATABASE?}
+      guestready__db__host: "postgres"
+
+    networks:
+      - guestready
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "--fail",
+          "localhost:8000/health",
+          "-u ${GUESTREADY__API_AUTH_USER}:${GUESTREADY__API_AUTH_PASSWORD}",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+      start_interval: 30s
