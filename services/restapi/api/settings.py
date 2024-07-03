@@ -10,7 +10,7 @@ from api.app.config import APIConfig
 from api.database.config import PostgresqlDBConfig
 from api.logger import LoggerConfig
 
-_Config__SERVICE_PREFIX: str = "guestready__"
+_Config__SERVICE_PREFIX: str = 'guestready__'
 
 
 class Settings(BaseSettings):
@@ -28,9 +28,9 @@ class Settings(BaseSettings):
     logger: LoggerConfig
 
     model_config = SettingsConfigDict(
-        env_file="restapi.env",
-        env_nested_delimiter="__",
-        env_file_encoding="utf-8",
+        env_file='restapi.env',
+        env_nested_delimiter='__',
+        env_file_encoding='utf-8',
         env_prefix=_Config__SERVICE_PREFIX,
     )
 

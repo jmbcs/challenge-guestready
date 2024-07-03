@@ -35,7 +35,7 @@ def get_db_session() -> Generator[Session, Any, None]:
         session.commit()
     except Exception as e:
         session.rollback()
-        log.error(f"Session rollback due to: {e}")
+        log.error(f'Session rollback due to: {e}')
         raise e
     finally:
         session.close()
