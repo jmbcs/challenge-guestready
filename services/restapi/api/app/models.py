@@ -1,8 +1,9 @@
 from typing import List
 
-from api.database.db import Base
 from sqlalchemy import Column, Date, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, relationship
+
+from api.database.db import Base
 
 
 class Platform(Base):
@@ -88,8 +89,12 @@ class Game(Base):
     __tablename__ = 'game'
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    title = Column(String, nullable=False)
+    title = Column(
+        String,
+        nullable=False,
+    )
     genre = Column(String, nullable=False)
+    description = Column(String, nullable=False)
     release_date = Column(Date, nullable=False)
 
     platform_id = Column(Integer, ForeignKey('platform.id'), nullable=False)

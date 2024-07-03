@@ -43,6 +43,7 @@ class GameSchema(BaseModel):
     Attributes:
         title (str): The title of the game.\n
         genre (str): The genre of the game.\n
+        description(str) : The description of the game .\n
         release_date (date): The release date of the game.\n
         platform (str): The name of the platform on which the game is available.\n
         publisher (str): The name of the publisher of the game.\n
@@ -52,7 +53,7 @@ class GameSchema(BaseModel):
     title: str = Field(description='The title of the game.')
     genre: str = Field(description='The genre of the game.')
     release_date: date = Field(description='The release date of the game.')
-
+    description: str = Field(description='The description of th egame')
     platform: str = Field(
         description='The name of the platform on which the game is available.'
     )

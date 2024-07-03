@@ -12,6 +12,7 @@ create_game_responses: dict[int | str, dict[str, Any]] = {
                     'game': {
                         'title': 'Example Game',
                         'genre': 'Action',
+                        'description': 'Example Description',
                         'release_date': '2023-06-01',
                         'platform': 'PC',
                         'publisher': 'Example Publisher',
@@ -59,6 +60,7 @@ get_game_responses: dict[int | str, dict[str, Any]] = {
                     'game': {
                         'title': 'Example Game',
                         'genre': 'Action',
+                        'description': 'Example Description',
                         'release_date': '2023-06-01',
                         'platform': 'PC',
                         'publisher': 'Example Publisher',

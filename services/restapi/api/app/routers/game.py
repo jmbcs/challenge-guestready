@@ -2,14 +2,13 @@ import logging
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.query import Query
-
 from api.app.models import Developer, Game, Platform, Publisher
 from api.app.responses import create_game_responses, get_game_responses
 from api.app.schemas import GameCreateResponse, GameSchema
 from api.database.db import get_db
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from sqlalchemy.orm.query import Query
 
 router: APIRouter = APIRouter(tags=['Games'])
 logger: logging.Logger = logging.getLogger(__name__)
@@ -46,6 +45,7 @@ async def get_games(
             GameSchema(
                 title=str(game.title),
                 genre=str(game.genre),
+                description=str(game.description),
                 platform=str(game.platform.name),
                 developer=str(game.developer.name),
                 publisher=str(game.publisher.name),
@@ -87,6 +87,7 @@ async def get_games_by_developer(
             GameSchema(
                 title=str(game.title),
                 genre=str(game.genre),
+                description=str(game.description),
                 platform=str(game.platform.name),
                 developer=str(game.developer.name),
                 publisher=str(game.publisher.name),
@@ -175,6 +176,7 @@ async def create_game(
         new_game: Game = Game(
             title=game.title,
             genre=game.genre,
+            description=game.description,
             platform=platform,
             publisher=publisher,
             developer=developer,
