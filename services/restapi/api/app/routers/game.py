@@ -67,18 +67,18 @@ async def get_games(
         )
 
 
-@router.get('/games/{game_developer}', response_model=list[GameSchema])
+@router.get('/games/{developer}', response_model=list[GameSchema])
 async def get_games_by_developer(
-    game_developer: str, db: Session = Depends(get_db)
+    developer: str, db: Session = Depends(get_db)
 ) -> list[GameSchema]:
     try:
         # Query the developer from the database
-        developer: Developer | None = (
-            db.query(Developer).filter(Developer.name == game_developer).first()
+        game_dev: Developer | None = (
+            db.query(Developer).filter(Developer.name == developer).first()
         )
 
         # If developer not found, raise a 404 error
-        if not developer:
+        if not game_dev:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail='Developer not found'
             )
@@ -92,7 +92,7 @@ async def get_games_by_developer(
                 publisher=str(game.publisher.name),
                 release_date=datetime.strptime(str(game.release_date), '%Y-%m-%d'),
             )
-            for game in developer.games
+            for game in game_dev.games
         ]
 
         return reponse
