@@ -42,7 +42,7 @@ echo "Granting read and write permissions to role '$POSTGRES_API_USER' on tables
 PGPASSWORD="$POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname="$POSTGRES_API_DATABASE" <<-EOSQL
     -- Revoke connect privilege from all databases
     REVOKE CONNECT ON DATABASE postgres FROM $POSTGRES_API_USER;
-    REVOKE CONNECT ON DATABASE postgres FROM PUBLIC; 
+    REVOKE CONNECT ON DATABASE postgres FROM PUBLIC;
 
     -- Grant connect privilege to the specific API database
     GRANT CONNECT ON DATABASE $POSTGRES_API_DATABASE TO $POSTGRES_API_USER;
@@ -50,7 +50,7 @@ PGPASSWORD="$POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 --username "$POSTGRES_US
     -- Grant table-level permissions in the specific database
     \connect $POSTGRES_API_DATABASE
     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO $POSTGRES_API_USER;
-    
+
     -- Ensure default privileges for new tables
     ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO $POSTGRES_API_USER;
 EOSQL
