@@ -1,9 +1,8 @@
 from typing import List
 
+from api.database.db import Base
 from sqlalchemy import Column, Date, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, relationship
-
-from api.database.db import Base
 
 
 class Platform(Base):
@@ -19,7 +18,7 @@ class Platform(Base):
     __tablename__ = 'platform'
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String, nullable=False, unique=True)
+    name = Column(String, nullable=False, unique=True, index=True)
 
     games: Mapped[List['Game']] = relationship('Game', back_populates='platform')
 
@@ -40,7 +39,7 @@ class Publisher(Base):
     __tablename__ = 'publisher'
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String, nullable=False, unique=True)
+    name = Column(String, nullable=False, unique=True, index=True)
 
     games: Mapped[List['Game']] = relationship('Game', back_populates='publisher')
 
@@ -61,7 +60,7 @@ class Developer(Base):
     __tablename__ = 'developer'
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String, nullable=False, unique=True)
+    name = Column(String, nullable=False, unique=True, index=True)
 
     games: Mapped[List['Game']] = relationship('Game', back_populates='developer')
 
@@ -89,13 +88,10 @@ class Game(Base):
     __tablename__ = 'game'
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    title = Column(
-        String,
-        nullable=False,
-    )
-    genre = Column(String, nullable=False)
+    title = Column(String, nullable=False, index=True)
+    genre = Column(String, nullable=False, index=True)
     description = Column(String, nullable=False)
-    release_date = Column(Date, nullable=False)
+    release_date = Column(Date, nullable=False, index=True)
 
     platform_id = Column(Integer, ForeignKey('platform.id'), nullable=False)
     publisher_id = Column(Integer, ForeignKey('publisher.id'), nullable=False)
