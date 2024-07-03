@@ -2,11 +2,11 @@ import logging
 from contextlib import contextmanager
 from typing import Any, Generator
 
-from api.settings import config
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.orm import Session, declarative_base, sessionmaker
+
+from api.settings import config
 
 log: logging.Logger = logging.getLogger(__name__)
 
