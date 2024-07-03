@@ -1,6 +1,10 @@
 from typing import Tuple, Type
 
-from pydantic_settings import BaseSettings, PydanticBaseSettingsSource
+from pydantic_settings import (
+    BaseSettings,
+    PydanticBaseSettingsSource,
+    SettingsConfigDict,
+)
 
 from api.app.config import APIConfig
 from api.database.config import PostgresqlDBConfig
@@ -23,21 +27,12 @@ class Settings(BaseSettings):
     db: PostgresqlDBConfig
     logger: LoggerConfig
 
-    class Config:
-        """
-        Configuration for the Settings class.
-
-        Attributes:
-            env_file (str): The environment file to load settings from.
-            env_nested_delimiter (str): The delimiter for nested environment variables.
-            env_file_encoding (str): The encoding of the environment file.
-            env_prefix (str): The prefix for environment variables.
-        """
-
-        env_file: str = "restapi.env"
-        env_nested_delimiter: str = "__"
-        env_file_encoding: str = "utf-8"
-        env_prefix: str = _Config__SERVICE_PREFIX
+    model_config = SettingsConfigDict(
+        env_file="restapi.env",
+        env_nested_delimiter="__",
+        env_file_encoding="utf-8",
+        env_prefix=_Config__SERVICE_PREFIX,
+    )
 
     @classmethod
     def settings_customise_sources(
