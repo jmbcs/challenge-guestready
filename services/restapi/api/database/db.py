@@ -3,11 +3,10 @@ import time
 from contextlib import contextmanager
 from typing import Any, Generator
 
+from api.settings import config
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, declarative_base, sessionmaker
-
-from api.settings import config
 
 log: logging.Logger = logging.getLogger(__name__)
 
@@ -15,7 +14,9 @@ log: logging.Logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 # Create an engine instance
-engine: Engine = create_engine(config.db.get_url(), echo=True)
+engine: Engine = create_engine(
+    config.db.get_url(), echo=False, pool_size=100, max_overflow=10
+)
 
 # Create a configured "Session" class
 SessionLocal: sessionmaker = sessionmaker(
