@@ -1,4 +1,5 @@
 import logging
+import time
 from contextlib import contextmanager
 from typing import Any, Generator
 
@@ -30,6 +31,7 @@ def get_db_session() -> Generator[Session, Any, None]:
     This ensures that sessions are properly closed after use.
     """
     session: Session = SessionLocal()
+    start_time = time.time()
     try:
         yield session
         session.commit()
@@ -38,6 +40,8 @@ def get_db_session() -> Generator[Session, Any, None]:
         log.error(f'Session rollback due to: {e}')
         raise e
     finally:
+        end_time = time.time()
+        log.debug(f'DB Total Session Query Time: {(end_time - start_time):.4f} seconds')
         session.close()
 
 
