@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -73,6 +73,7 @@ class GameSchema(BaseModel):
         Returns:
             date: The validated release date.\n
         """
+
         if v > date.today():
             raise ValueError("Release date cannot be in the future.")
         return v
