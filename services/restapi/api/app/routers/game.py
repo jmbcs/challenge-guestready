@@ -4,6 +4,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from sqlalchemy.orm.query import Query
 
 from api.app.models import Developer, Game, Platform, Publisher
 from api.app.responses import create_game_responses, get_game_responses
@@ -22,7 +23,7 @@ async def get_games(
     db: Session = Depends(get_db),
 ) -> list[GameSchema]:
     try:
-        query = db.query(Game)
+        query: Query[Game] = db.query(Game)
 
         if genre:
             query = query.filter(Game.genre == genre)
@@ -33,7 +34,7 @@ async def get_games(
         if platform:
             query = query.join(Game.platform).filter(Platform.name == platform)
 
-        db_games = query.all()
+        db_games: list[Game] = query.all()
 
         if not db_games:
             raise HTTPException(
@@ -41,7 +42,7 @@ async def get_games(
                 detail='No game found based on parameters',
             )
 
-        games = [
+        games: list[GameSchema] = [
             GameSchema(
                 title=str(game.title),
                 genre=str(game.genre),
@@ -66,10 +67,10 @@ async def get_games(
         )
 
 
-@router.get('/games/{game_developer}', response_model=list[str])
+@router.get('/games/{game_developer}', response_model=list[GameSchema])
 async def get_games_by_developer(
     game_developer: str, db: Session = Depends(get_db)
-) -> list[Game]:
+) -> list[GameSchema]:
     try:
         # Query the developer from the database
         developer: Developer | None = (
@@ -82,10 +83,19 @@ async def get_games_by_developer(
                 status_code=status.HTTP_404_NOT_FOUND, detail='Developer not found'
             )
 
-        # Retrieve the list of games developed by the developer
-        response: list[Game] = [game for game in developer.games]
+        reponse: list[GameSchema] = [
+            GameSchema(
+                title=str(game.title),
+                genre=str(game.genre),
+                platform=str(game.platform.name),
+                developer=str(game.developer.name),
+                publisher=str(game.publisher.name),
+                release_date=datetime.strptime(str(game.release_date), '%Y-%m-%d'),
+            )
+            for game in developer.games
+        ]
 
-        return response
+        return reponse
 
     except HTTPException as http_exc:
         logger.error(f'HTTP error occurred: {http_exc.detail}')
