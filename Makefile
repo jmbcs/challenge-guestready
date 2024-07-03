@@ -30,9 +30,11 @@ up: ## Launch the docker compose
 down: ## Stops all containers 
 	@docker compose -f docker-compose.yml down --remove-orphans 
 
-remove: ## Remove all containers and volumes (delete)
+remove: ## Remove all containers and volumes 
 	@docker compose -f docker-compose.yml down --volumes --remove-orphans
 
+tests: ## Run mypy, pytest and tox in the repo (development)
+	@tox 
 
 dev.api: ## Run the API directly in the terminal (development)
 	@cd services/restapi; python3 api
