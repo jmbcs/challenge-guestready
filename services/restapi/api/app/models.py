@@ -1,9 +1,8 @@
 from typing import List
 
+from api.database.db import Base
 from sqlalchemy import Column, Date, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, relationship
-
-from api.database.db import Base
 
 
 class Platform(Base):
@@ -63,9 +62,7 @@ class Developer(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, nullable=False, unique=True)
 
-    games: Mapped[List['Game']] = relationship(
-        'Game', back_populates='developer', lazy='noload'
-    )
+    games: Mapped[List['Game']] = relationship('Game', back_populates='developer')
 
     def __repr__(self):
         return f"<Developer(id={self.id}, name='{self.name}')>"
