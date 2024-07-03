@@ -6,3 +6,4 @@ colorlog==6.8.2
 SQLAlchemy==2.0.31
 alembic==1.13.2
 psycopg2-binary==2.9.9
+tox==4.16.0
