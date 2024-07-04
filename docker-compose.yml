@@ -20,7 +20,7 @@ services:
 
     environment:
       guestready__api__auth__user: ${GUESTREADY__API_AUTH_USER?}
-      guestready__api__auth__password: ${GUESTREADY__API_AUTH_PASSWORD}
+      guestready__api__auth__password: ${GUESTREADY__API_AUTH_PASSWORD?}
       guestready__api__port: "8000"
       guestready__logger__level: "DEBUG"
       guestready__logger__enable_log_color: True
@@ -43,7 +43,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl --fail localhost:8000/health -u ${GUESTREADY__API_AUTH_USER}:${GUESTREADY__API_AUTH_PASSWORD}",
+          "curl --fail localhost:8000/health -u ${GUESTREADY__API_AUTH_USER?}:${GUESTREADY__API_AUTH_PASSWORD?}",
         ]
       interval: 1m
       timeout: 10s
@@ -57,7 +57,7 @@ services:
     environment:
       POSTGRES_USER: ${GUESTREADY__POSTGRES_USER?}
       POSTGRES_PASSWORD: ${GUESTREADY__POSTGRES_PASSWORD?}
-      POSTGRES_API_DATABASE: ${GUESTREADY__API_POSTGRES_DATABASE}
+      POSTGRES_API_DATABASE: ${GUESTREADY__API_POSTGRES_DATABASE?}
       POSTGRES_API_USER: ${GUESTREADY__API_POSTGRES_USER?}
       POSTGRES_API_PASSWORD: ${GUESTREADY__API_POSTGRES_PASSWORD?}
       PGDATA: /data/postgres
@@ -82,7 +82,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "pg_isready -U ${GUESTREADY__API_POSTGRES_USER} -d ${GUESTREADY__API_POSTGRES_DATABASE}",
+          "pg_isready -U ${GUESTREADY__API_POSTGRES_USER?} -d ${GUESTREADY__API_POSTGRES_DATABASE?}",
         ]
       interval: 1m
       timeout: 10s
