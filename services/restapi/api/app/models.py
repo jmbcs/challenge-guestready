@@ -76,6 +76,7 @@ class Game(Base):
         id (int): The primary key and unique identifier for each game.
         title (str): The title of the game, which cannot be null.
         genre (str): The genre of the game, which cannot be null.
+        description (str): The description of the game, which cannot be null.
         release_date (date): The release date of the game, which cannot be null.
         platform_id (int): The foreign key linking to the platform the game is available on.
         publisher_id (int): The foreign key linking to the publisher of the game.
