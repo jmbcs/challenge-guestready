@@ -25,7 +25,7 @@ help: ## Show this help
 
 
 up: ## Launch the docker compose
-	@docker compose -f docker-compose.yml up --build --detach
+	@docker compose -f docker-compose.yml up --build -d --wait
 
 down: ## Stops all containers
 	@docker compose -f docker-compose.yml down --remove-orphans
