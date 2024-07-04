@@ -60,6 +60,3 @@ if [ $? -ne 0 ]; then
     echo "Error: Granting permissions failed."
     exit 1
 fi
-
-# Exit normally if all steps are successful
-exit 0

@@ -7,47 +7,6 @@ networks:
 
 name: guestready
 services:
-  postgres:
-    image: postgres:15.0
-    container_name: postgres
-    environment:
-      POSTGRES_USER: ${GUESTREADY__POSTGRES_USER?}
-      POSTGRES_PASSWORD: ${GUESTREADY__POSTGRES_PASSWORD?}
-      POSTGRES_API_DATABASE: ${GUESTREADY__API_POSTGRES_DATABASE}
-      POSTGRES_API_USER: ${GUESTREADY__API_POSTGRES_USER?}
-      POSTGRES_API_PASSWORD: ${GUESTREADY__API_POSTGRES_PASSWORD?}
-      PGDATA: /data/postgres
-    volumes:
-      - type: volume
-        source: postgres_storage
-        target: /data/postgres
-      - type: bind
-        source: .docker-compose/initdb
-        target: /docker-entrypoint-initdb.d
-        read_only: True
-
-    ports:
-      - "5432:5432"
-    expose:
-      - 5432
-    networks:
-      - guestready
-    restart: unless-stopped
-
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "pg_isready",
-          "-U",
-          "${GUESTREADY__API_POSTGRES_USER}",
-          "-d",
-          "${GUESTREADY__API_POSTGRES_DATABASE}",
-        ]
-      interval: 10s
-      timeout: 10s
-      retries: 5
-
   api:
     container_name: api
     build:
@@ -83,14 +42,49 @@ services:
     healthcheck:
       test:
         [
-          "CMD",
-          "curl",
-          "--fail",
-          "localhost:8000/health",
-          "-u ${GUESTREADY__API_AUTH_USER}:${GUESTREADY__API_AUTH_PASSWORD}",
+          "CMD-SHELL",
+          "curl --fail localhost:8000/health -u ${GUESTREADY__API_AUTH_USER}:${GUESTREADY__API_AUTH_PASSWORD}",
         ]
-      interval: 30s
+      interval: 1m
       timeout: 10s
       retries: 5
-      start_period: 30s
-      start_interval: 30s
+      start_interval: 5s
+      start_period: 5s
+
+  postgres:
+    image: postgres:15.0
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${GUESTREADY__POSTGRES_USER?}
+      POSTGRES_PASSWORD: ${GUESTREADY__POSTGRES_PASSWORD?}
+      POSTGRES_API_DATABASE: ${GUESTREADY__API_POSTGRES_DATABASE}
+      POSTGRES_API_USER: ${GUESTREADY__API_POSTGRES_USER?}
+      POSTGRES_API_PASSWORD: ${GUESTREADY__API_POSTGRES_PASSWORD?}
+      PGDATA: /data/postgres
+    volumes:
+      - type: volume
+        source: postgres_storage
+        target: /data/postgres
+      - type: bind
+        source: .docker-compose/initdb
+        target: /docker-entrypoint-initdb.d
+        read_only: True
+
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    networks:
+      - guestready
+    restart: unless-stopped
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${GUESTREADY__API_POSTGRES_USER} -d ${GUESTREADY__API_POSTGRES_DATABASE}",
+        ]
+      interval: 1m
+      timeout: 10s
+      retries: 5
+      start_interval: 5s
