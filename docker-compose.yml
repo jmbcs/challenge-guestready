@@ -1,0 +1,90 @@
+volumes:
+  postgres_storage:
+
+networks:
+  guestready:
+    driver: bridge
+
+name: guestready
+services:
+  api:
+    container_name: api
+    build:
+      context: ./services/restapi/.
+      dockerfile: Dockerfile
+    expose:
+      - 8000
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      guestready__api__auth__user: ${GUESTREADY__API_AUTH_USER?}
+      guestready__api__auth__password: ${GUESTREADY__API_AUTH_PASSWORD?}
+      guestready__api__port: "8000"
+      guestready__logger__level: "DEBUG"
+      guestready__logger__enable_log_color: True
+      guestready__db__username: ${GUESTREADY__API_POSTGRES_USER?}
+      guestready__db__password: ${GUESTREADY__API_POSTGRES_PASSWORD?}
+      guestready__db__port: "5432"
+      guestready__db__database: ${GUESTREADY__API_POSTGRES_DATABASE?}
+      guestready__db__host: "postgres"
+
+    networks:
+      - guestready
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail localhost:8000/health -u ${GUESTREADY__API_AUTH_USER?}:${GUESTREADY__API_AUTH_PASSWORD?}",
+        ]
+      interval: 1m
+      timeout: 10s
+      retries: 5
+      start_interval: 5s
+      start_period: 5s
+
+  postgres:
+    image: postgres:15.0
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${GUESTREADY__POSTGRES_USER?}
+      POSTGRES_PASSWORD: ${GUESTREADY__POSTGRES_PASSWORD?}
+      POSTGRES_API_DATABASE: ${GUESTREADY__API_POSTGRES_DATABASE?}
+      POSTGRES_API_USER: ${GUESTREADY__API_POSTGRES_USER?}
+      POSTGRES_API_PASSWORD: ${GUESTREADY__API_POSTGRES_PASSWORD?}
+      PGDATA: /data/postgres
+    volumes:
+      - type: volume
+        source: postgres_storage
+        target: /data/postgres
+      - type: bind
+        source: .docker-compose/initdb
+        target: /docker-entrypoint-initdb.d
+        read_only: True
+
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    networks:
+      - guestready
+    restart: unless-stopped
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${GUESTREADY__API_POSTGRES_USER?} -d ${GUESTREADY__API_POSTGRES_DATABASE?}",
+        ]
+      interval: 1m
+      timeout: 10s
+      retries: 5
+      start_interval: 5s
