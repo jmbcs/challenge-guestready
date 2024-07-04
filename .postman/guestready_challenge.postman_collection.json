@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "36bf9d71-31cb-4416-b078-faa05af5ee94",
+		"name": "guestready_challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36527288"
+	},
+	"item": [
+		{
+			"name": "Get All Games",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "test123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Games By Developer",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "test123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/games/Blizzard Entertainment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"games",
+						"Blizzard Entertainment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Games Filtering",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "test123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/games?genre=MMORPG",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"games"
+					],
+					"query": [
+						{
+							"key": "genre",
+							"value": "MMORPG"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Game",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "test123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"PostmanGame{{$randomInt}}{{$randomInt}}\",\n  \"genre\": \"PostmanGenre{{$randomInt}}\",\n  \"release_date\": \"2024-07-03\",\n  \"description\": \"string\",\n  \"platform\": \"PostmanPlatform\",\n  \"publisher\": \"PostmanPublisher\",\n  \"developer\": \"PostmanDeveloper\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/game",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"game"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
