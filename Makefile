@@ -36,8 +36,8 @@ remove: ## Remove all containers and volumes
 tox: ## Run tox with mypy, pytest and precommit in the repo (development)
 	@tox
 
-pytest : ## Run only pytest  (development)
-	@tox -e py311
+test : ## Run only tests (django and restapi pytest)  (development)
+	@tox -e py311,django
 
 mypy: ## Run only mypy  (development)
 	@tox -e mypy
