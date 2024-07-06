@@ -1,4 +1,4 @@
-exclude: ^(.*\/migrations\/.*|.*\/videos\/.*)
+exclude: ^(.*\/migrations\/.*|videos\/.*)
 
 
 repos:
