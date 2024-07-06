@@ -4,35 +4,37 @@
         <div class="max-w-3xl mx-auto text-center">
             <p class="mb-20 text-7xl text-[white]">Guestready Challenge</p>
             <!-- Form to trigger API call to import game data -->
-            <form id="getGameDataForm"
-                  hx-get="{% url 'import_games' %}"
-                  hx-target="#getGameDataForm"
-                  hx-on:click="document.getElementById('submitButton').innerHTML = '<span class=\'loading loading-spinner\'></span> loading';"
-                  hx-swap="OuterHTML">
-                {% csrf_token %}
-                <div class="mb-10">
-                    <button type="submit"
-                            id="submitButton"
-                            class="btn btn-primary btn-lg bg-white border-none rounded-box text-[#71192e] hover:bg-[#71192e] hover:text-white">
-                        <span id="buttonText">Get Game Data</span>
-                    </button>
-                </div>
-            </form>
-            <!-- Form to send all games to FASTAPI service -->
-            <form id="sendAllGamesForm"
-                  hx-post="{% url 'post_games' %}"
-                  hx-target="#sendAllGamesForm"
-                  hx-on:click="document.getElementById('sendButton').innerHTML = '<span class=\'loading loading-spinner\'></span> sending';"
-                  hx-swap="OuterHTML">
-                {% csrf_token %}
-                <div class="mb-10">
-                    <button type="submit"
-                            id="sendButton"
-                            class="btn btn-primary btn-lg bg-white border-none rounded-box text-[#71192e] hover:bg-[#71192e] hover:text-white">
-                        <span id="sendButtonText">Send All Games</span>
-                    </button>
-                </div>
-            </form>
+            <div id =buttons_guestready>
+                <form id="getGameDataForm"
+                    hx-get="{% url 'import_games' %}"
+                    hx-target="#buttons_guestready"
+                    hx-on:click="document.getElementById('submitButton').innerHTML = '<span class=\'loading loading-spinner\'></span> loading';"
+                    hx-swap="OuterHTML">
+                    {% csrf_token %}
+                    <div class="mb-10">
+                        <button type="submit"
+                                id="submitButton"
+                                class="btn btn-primary btn-lg bg-white border-none rounded-box text-[#71192e] hover:bg-[#71192e] hover:text-white">
+                            <span id="buttonText">Get Game Data</span>
+                        </button>
+                    </div>
+                </form>
+                <!-- Form to send all games to FASTAPI service -->
+                <form id="sendAllGamesForm"
+                    hx-post="{% url 'post_games' %}"
+                    hx-target="#buttons_guestready"
+                    hx-on:click="document.getElementById('sendButton').innerHTML = '<span class=\'loading loading-spinner\'></span> sending';"
+                    hx-swap="OuterHTML">
+                    {% csrf_token %}
+                    <div class="mb-10">
+                        <button type="submit"
+                                id="sendButton"
+                                class="btn btn-primary btn-lg bg-white border-none rounded-box text-[#71192e] hover:bg-[#71192e] hover:text-white">
+                            <span id="sendButtonText">Send All Games</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </header>
 {% endblock %}
