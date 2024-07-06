@@ -204,7 +204,7 @@ def test_create_existing_game(create_test_data):
     assert response.status_code == 409
     assert (
         response.json()['detail']['message']
-        == 'A game with the same title already exists.'
+        == f'A game with the same title {game_data["title"]} already exists.'
     )
 
 
