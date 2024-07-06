@@ -4,7 +4,11 @@
 
 ## Video - Interaction
 
-![interaction](videos/interaction.mp4)
+
+
+https://github.com/jmbcs/challenge-guestready/assets/112523386/717e7fb3-3eae-48eb-a08a-cb6908b6aad5
+
+
 
 ## Proposed architecture
 
