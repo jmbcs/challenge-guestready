@@ -1,7 +1,7 @@
-djangorestframework==3.15
+colorlog==6.8.2
 django-admin==2.0.2
-requests==2.32.3
 django-template-partials==24.2
+djangorestframework==3.15
 pydantic==2.7.4
 pydantic-settings==2.3.3
-colorlog==6.8.2
+requests==2.32.3

@@ -58,7 +58,7 @@ class LoggerConfig(BaseModel):
             stream_handler.setFormatter(color_formatter)
         else:
             normal_formatter: Formatter = logging.Formatter(
-                self.log_format, datefmt=self.date_format
+                self.log_format, datefmt=self.date_format,
             )
             stream_handler.setFormatter(normal_formatter)
 

@@ -50,7 +50,9 @@ async def get_games(
                 platform=str(game.platform.name),
                 developer=str(game.developer.name),
                 publisher=str(game.publisher.name),
-                release_date=datetime.strptime(str(game.release_date), '%Y-%m-%d'),
+                release_date=datetime.strptime(
+                    str(game.release_date), '%Y-%m-%d',
+                ),
             )
             for game in db_games
         ]
@@ -64,13 +66,13 @@ async def get_games(
     except Exception as e:
         logger.error(f'An error occurred: {e}')
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e),
         )
 
 
 @router.get('/games/{developer}', response_model=list[GameSchema])
 async def get_games_by_developer(
-    developer: str, db: Session = Depends(get_db)
+    developer: str, db: Session = Depends(get_db),
 ) -> list[GameSchema]:
     try:
         # Query the developer from the database
@@ -81,7 +83,7 @@ async def get_games_by_developer(
         # If developer not found, raise a 404 error
         if not game_dev:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail='Developer not found'
+                status_code=status.HTTP_404_NOT_FOUND, detail='Developer not found',
             )
 
         reponse: list[GameSchema] = [
@@ -92,7 +94,9 @@ async def get_games_by_developer(
                 platform=str(game.platform.name),
                 developer=str(game.developer.name),
                 publisher=str(game.publisher.name),
-                release_date=datetime.strptime(str(game.release_date), '%Y-%m-%d'),
+                release_date=datetime.strptime(
+                    str(game.release_date), '%Y-%m-%d',
+                ),
             )
             for game in game_dev.games
         ]
@@ -106,7 +110,7 @@ async def get_games_by_developer(
     except Exception as e:
         logger.error(f'An error occurred: {e}')
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e),
         )
 
 
@@ -117,7 +121,7 @@ async def get_games_by_developer(
     responses=create_game_responses,
 )
 async def create_game(
-    game: GameSchema, db: Session = Depends(get_db)
+    game: GameSchema, db: Session = Depends(get_db),
 ) -> GameCreateResponse:
     try:
         # VALIDATION - Check if the game already exists
@@ -151,7 +155,9 @@ async def create_game(
 
         # Check if publisher already exists, if not create it.
         publisher: Publisher | None = (
-            db.query(Publisher).filter(Publisher.name == game.publisher).first()
+            db.query(Publisher).filter(
+                Publisher.name == game.publisher,
+            ).first()
         )
         if not publisher:
             publisher = Publisher(name=game.publisher)
@@ -163,7 +169,9 @@ async def create_game(
 
         # Check if developer already exists, if not create it.
         developer: Developer | None = (
-            db.query(Developer).filter(Developer.name == game.developer).first()
+            db.query(Developer).filter(
+                Developer.name == game.developer,
+            ).first()
         )
         if not developer:
             developer = Developer(name=game.developer)
@@ -203,5 +211,5 @@ async def create_game(
         db.rollback()
         logger.error(f'An error occurred: {e}')
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e),
         )

@@ -58,12 +58,14 @@ def get_games_from_api(request: HttpRequest) -> HttpResponse:
 
         for game_data in data:
             try:
-                platform, _ = Platform.objects.get_or_create(name=game_data['platform'])
+                platform, _ = Platform.objects.get_or_create(
+                    name=game_data['platform'],
+                )
                 publisher, _ = Publisher.objects.get_or_create(
-                    name=game_data['publisher']
+                    name=game_data['publisher'],
                 )
                 developer, _ = Developer.objects.get_or_create(
-                    name=game_data['developer']
+                    name=game_data['developer'],
                 )
 
                 game, created = Game.objects.get_or_create(
@@ -81,11 +83,15 @@ def get_games_from_api(request: HttpRequest) -> HttpResponse:
                     logger.debug(f'Successfully imported {game.title}')
                 else:
                     fail_count += 1
-                    logger.warning(f'{game.title} already exists in the database')
+                    logger.warning(
+                        f'{game.title} already exists in the database',
+                    )
 
             except Exception as e:
                 fail_count += 1
-                logger.error(f"Failed to import game {game_data['title']}: {str(e)}")
+                logger.error(
+                    f"Failed to import game {game_data['title']}: {str(e)}",
+                )
 
         context: dict[str, int | models.BaseManager[Game]] = {
             'success_count': success_count,
@@ -137,7 +143,10 @@ def post_games(request: HttpRequest) -> HttpResponse:
         response: requests.Response = requests.post(
             url=f'{config.fastapi.url}/game',
             json=post_data,
-            auth=HTTPBasicAuth(config.fastapi.auth.user, config.fastapi.auth.password),
+            auth=HTTPBasicAuth(
+                config.fastapi.auth.user,
+                config.fastapi.auth.password,
+            ),
         )
 
         if response.status_code == status.HTTP_201_CREATED:

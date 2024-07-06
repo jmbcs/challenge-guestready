@@ -55,10 +55,14 @@ class GameSchema(BaseModel):
     release_date: date = Field(description='The release date of the game.')
     description: str = Field(description='The description of th egame')
     platform: str = Field(
-        description='The name of the platform on which the game is available.'
+        description='The name of the platform on which the game is available.',
     )
-    publisher: str = Field(description='The name of the publisher of the game.')
-    developer: str = Field(description='The name of the developer of the game.')
+    publisher: str = Field(
+        description='The name of the publisher of the game.',
+    )
+    developer: str = Field(
+        description='The name of the developer of the game.',
+    )
 
     @field_validator('release_date')
     def validate_release_date(cls, v):

@@ -20,13 +20,19 @@ class Game(models.Model):
     release_date = models.DateField()
 
     platform = models.ForeignKey(
-        Platform, on_delete=models.CASCADE, related_name='games'
+        Platform,
+        on_delete=models.CASCADE,
+        related_name='games',
     )
     publisher = models.ForeignKey(
-        Publisher, on_delete=models.CASCADE, related_name='games'
+        Publisher,
+        on_delete=models.CASCADE,
+        related_name='games',
     )
     developer = models.ForeignKey(
-        Developer, on_delete=models.CASCADE, related_name='games'
+        Developer,
+        on_delete=models.CASCADE,
+        related_name='games',
     )
 
     def __str__(self):

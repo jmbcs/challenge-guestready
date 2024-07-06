@@ -15,7 +15,7 @@ users: dict[str, dict[str, str | bool]] = {
         'password': config.api.auth.password,
         'token': '',
         'priviliged': True,
-    }
+    },
 }
 
 

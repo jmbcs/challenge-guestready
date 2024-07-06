@@ -52,7 +52,7 @@ def add_game(game: dict[str, Any]) -> None:
         }
         # Send the POST request to the API endpoint
         response: Response = requests.post(
-            URL, json=filtered_game, auth=(AUTH_USER, AUTH_PASSWORD)
+            URL, json=filtered_game, auth=(AUTH_USER, AUTH_PASSWORD),
         )
         # Raise an exception for any HTTP errors
         response.raise_for_status()

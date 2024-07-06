@@ -20,7 +20,7 @@ def _get_auth_headers() -> dict[str, str]:
 
     # Encode the credentials in base64
     encoded_credentials: str = base64.b64encode(credentials.encode('utf-8')).decode(
-        'utf-8'
+        'utf-8',
     )
 
     # Create the headers dictionary with the Authorization header

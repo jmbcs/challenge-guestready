@@ -18,8 +18,8 @@ create_game_responses: dict[int | str, dict[str, Any]] = {
                         'publisher': 'Example Publisher',
                         'developer': 'Example Developer',
                     },
-                }
-            }
+                },
+            },
         },
     },
     status.HTTP_409_CONFLICT: {
@@ -30,8 +30,8 @@ create_game_responses: dict[int | str, dict[str, Any]] = {
                     'detail': {
                         'message': 'A game with the same title already exists.',
                     },
-                }
-            }
+                },
+            },
         },
     },
     status.HTTP_500_INTERNAL_SERVER_ERROR: {
@@ -43,8 +43,8 @@ create_game_responses: dict[int | str, dict[str, Any]] = {
                         'message': 'An unexpected error occurred while creating the game.',
                         'error': 'Internal Server Error',
                     },
-                }
-            }
+                },
+            },
         },
     },
 }
@@ -66,8 +66,8 @@ get_game_responses: dict[int | str, dict[str, Any]] = {
                         'publisher': 'Example Publisher',
                         'developer': 'Example Developer',
                     },
-                }
-            }
+                },
+            },
         },
     },
     status.HTTP_404_NOT_FOUND: {
@@ -78,8 +78,8 @@ get_game_responses: dict[int | str, dict[str, Any]] = {
                     'detail': {
                         'message': 'No game found based on parameters',
                     },
-                }
-            }
+                },
+            },
         },
     },
 }

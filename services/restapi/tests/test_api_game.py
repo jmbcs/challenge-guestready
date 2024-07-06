@@ -15,11 +15,13 @@ TEST_DATABASE_URL: str = 'sqlite:///./test.db'
 
 # Create a new engine instance
 engine: Engine = create_engine(
-    TEST_DATABASE_URL, connect_args={'check_same_thread': False}
+    TEST_DATABASE_URL, connect_args={'check_same_thread': False},
 )
 
 # Create a configured "Session" class
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+TestingSessionLocal = sessionmaker(
+    autocommit=False, autoflush=False, bind=engine,
+)
 
 
 # Override the dependency to use the testing database session
@@ -49,7 +51,7 @@ def _get_auth_headers() -> dict[str, str]:
     """
     credentials: str = f'{config.api.auth.user}:{config.api.auth.password}'
     encoded_credentials: str = base64.b64encode(credentials.encode('utf-8')).decode(
-        'utf-8'
+        'utf-8',
     )
     headers: dict[str, str] = {'Authorization': f'Basic {encoded_credentials}'}
     return headers
@@ -120,7 +122,10 @@ def create_test_data(db_session):
     [
         ({}, 200, ['Game 1', 'Game 2']),  # No filters
         ({'genre': 'Action'}, 200, ['Game 1']),  # Filter by genre
-        ({'release_date': '2024-01-01'}, 200, ['Game 1']),  # Filter by release_date
+        (
+            {'release_date': '2024-01-01'}, 200,
+            ['Game 1'],
+        ),  # Filter by release_date
         (
             {'platform': 'Test Platform'},
             200,
@@ -135,12 +140,15 @@ def create_test_data(db_session):
     ],
 )
 def test_get_games(
-    query_params, expected_status_code, expected_titles, create_test_data
+    query_params, expected_status_code, expected_titles, create_test_data,
 ):
     """
     Test the /games endpoint with various query parameters.
     """
-    response = client.get('/games', params=query_params, headers=_get_auth_headers())
+    response = client.get(
+        '/games', params=query_params,
+        headers=_get_auth_headers(),
+    )
     assert response.status_code == expected_status_code
     if expected_status_code == 200:
         returned_titles = [game['title'] for game in response.json()]
@@ -162,7 +170,10 @@ def test_get_games_by_nonexistent_developer(create_test_data):
     """
     Test the /games/{developer} endpoint with a non-existent developer.
     """
-    response = client.get('/games/Nonexistent Developer', headers=_get_auth_headers())
+    response = client.get(
+        '/games/Nonexistent Developer',
+        headers=_get_auth_headers(),
+    )
     assert response.status_code == 404
     assert response.json()['detail'] == 'Developer not found'
 
@@ -181,7 +192,10 @@ def test_create_game(create_test_data):
         'release_date': '2023-12-31',
     }
 
-    response = client.post('/game', json=game_data, headers=_get_auth_headers())
+    response = client.post(
+        '/game', json=game_data,
+        headers=_get_auth_headers(),
+    )
     assert response.status_code == 201
     assert response.json()['game']['title'] == 'New Test Game'
 
@@ -200,7 +214,10 @@ def test_create_existing_game(create_test_data):
         'release_date': '2024-01-01',
     }
 
-    response = client.post('/game', json=game_data, headers=_get_auth_headers())
+    response = client.post(
+        '/game', json=game_data,
+        headers=_get_auth_headers(),
+    )
     assert response.status_code == 409
     assert (
         response.json()['detail']['message']
@@ -217,6 +234,9 @@ def test_create_game_missing_fields(create_test_data):
         'genre': 'Action',
     }
 
-    response = client.post('/game', json=game_data, headers=_get_auth_headers())
+    response = client.post(
+        '/game', json=game_data,
+        headers=_get_auth_headers(),
+    )
     assert response.status_code == 422  # Unprocessable Entity
     assert 'detail' in response.json()
