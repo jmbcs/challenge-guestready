@@ -18,7 +18,11 @@
 
 Watch the video below as a reference for the `Django` service + `FastAPI`
 
-https://github.com/jmbcs/challenge-guestready/assets/112523386/717e7fb3-3eae-48eb-a08a-cb6908b6aad5
+
+https://github.com/jmbcs/challenge-guestready/assets/112523386/b7d6f3be-5ca6-4098-9e7b-bf01fd171bd1
+
+
+
 
 ## Proposed Solution Architecture
 
