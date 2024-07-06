@@ -47,6 +47,7 @@ To set up your development environment, follow these steps:
 ### Additional Resources
 
 Reference the following video for guidance on using `direnv` to automatically set up your environment using the `.envrc` file
+
 https://github.com/jmbcs/challenge-guestready/assets/112523386/7cda6642-c9f9-46e2-bd42-a1e4ff663cea
 
 ## Video - Test
