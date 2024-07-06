@@ -8,16 +8,15 @@
 
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
-- [Challenge - Guestready - Django Developer](#challenge-guestready-django-developer)
-  - [Requirements](#requirements)
-  - [Quick Start](#quick-start)
-  - [Proposed Solution Architecture](#proposed-solution-architecture)
-    - [Key Features:](#key-features)
-  - [Development Environment Setup](#development-environment-setup)
-    - [Development and Debugging](#development-and-debugging)
-    - [Additional Resources](#additional-resources)
-  - [Testing](#testing)
-  - [Video - Test](#video-test)
+- [Requirements](#requirements)
+- [Quick Start](#quick-start)
+- [Proposed Solution Architecture](#proposed-solution-architecture)
+  - [Key Features:](#key-features)
+- [Development Environment Setup](#development-environment-setup)
+  - [Development and Debugging](#development-and-debugging)
+  - [Additional Resources](#additional-resources)
+- [Testing](#testing)
+- [Video - Test](#video-test)
 
 <!-- TOC end -->
 
