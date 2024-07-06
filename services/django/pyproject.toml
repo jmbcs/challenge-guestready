@@ -1,0 +1,25 @@
+
+[tool.setuptools]
+packages = ["django_project"]
+
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django_server"
+version = "1.0.0"
+description = "A simple django_server to retrieve data from a given url and send it to fastapi"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Júlio Silva", email = "julio.m.b.c.silva@gmail.com" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dynamic = ["dependencies"]
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }

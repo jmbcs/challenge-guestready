@@ -14,7 +14,7 @@ class Developer(models.Model):
 
 
 class Game(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, unique=True)
     genre = models.CharField(max_length=100)
     description = models.TextField()
     release_date = models.DateField()
@@ -30,4 +30,4 @@ class Game(models.Model):
     )
 
     def __str__(self):
-        return f'{self.title} ({self.release_date})'
+        return f'{self.title}'
