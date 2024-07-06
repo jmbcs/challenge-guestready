@@ -1,8 +1,8 @@
 import logging
 
+from api.settings import config
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from settings import config
 
 logger = logging.getLogger(__name__)
 

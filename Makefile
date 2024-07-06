@@ -36,6 +36,25 @@ remove: ## Remove all containers and volumes
 tox: ## Run tox with mypy, pytest and precommit in the repo (development)
 	@tox
 
+pytest : ## Run only pytest  (development)
+	@tox -e py311
+
+mypy: ## Run only mypy  (development)
+	@tox -e mypy
+
+precommit :  ## Run only precommit  (development)
+	@tox -e pre-commit
+
+clean: ## Clean up cache and build directories (development)
+	@find . -type d -name "__pycache__" -exec rm -rf {} +
+	@find . -type d -name ".pytest_cache" -exec rm -rf {} +
+	@find . -type d -name ".tox" -exec rm -rf {} +
+	@find . -type d -name ".ruff_cache" -exec rm -rf {} +
+	@find . -type d -name "*.egg-info" -exec rm -rf {} +
+	@find . -type d -name "build" -exec rm -rf {} +
+	@find . -type f -name ".coverage" -exec rm -f {} +
+	@find . -type d -name ".mypy_cache" -exec rm -rf {} +
+
 dev.api: ## Run the API directly in the terminal (development)
 	@cd services/restapi; python3 api
 
