@@ -10,7 +10,7 @@
 ## Quick Start
 
 1. Run `make run`
-   - Wait for services to be healthy
+   - Wait for services to be `healthy`(should take less than `30s` after building the images)
 2. Access Django at [http://localhost:8000](http://localhost:8000)
 3. Access FastAPI at [http://localhost:8001](http://localhost:8001)
    - User: `guestready`
@@ -18,11 +18,7 @@
 
 Watch the video below as a reference for the `Django` service + `FastAPI`
 
-
 https://github.com/jmbcs/challenge-guestready/assets/112523386/b7d6f3be-5ca6-4098-9e7b-bf01fd171bd1
-
-
-
 
 ## Proposed Solution Architecture
 
@@ -49,6 +45,8 @@ To set up your development environment, follow these steps:
 - You can run either Django or the FastAPI API directly from the terminal for development/debugging purposes.
 
 ### Additional Resources
+
+## Testing
 
 Reference the following video for guidance on using `direnv` to automatically set up your environment using the `.envrc` file
 
