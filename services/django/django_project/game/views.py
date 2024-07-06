@@ -23,7 +23,7 @@ def front_page(request: HttpRequest) -> HttpResponse:
     as an argument and returns an HttpResponse object with the rendered
     HTML content.
     """
-    return render(request, 'game/front_page.html')
+    return render(request, "game/front_page.html")
 
 
 def get_games_from_api(request: HttpRequest) -> HttpResponse:
@@ -40,8 +40,8 @@ def get_games_from_api(request: HttpRequest) -> HttpResponse:
        JsonResponse: JSON response indicating success or error.
 
     """
-    if not request.method == 'GET':
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+    if not request.method == "GET":
+        return JsonResponse({"status": "error", "message": "Invalid request method"})
 
     success_count: int = 0
     fail_count: int = 0
@@ -52,27 +52,27 @@ def get_games_from_api(request: HttpRequest) -> HttpResponse:
         data = response.json()
 
         if not isinstance(data, list):
-            raise TypeError('Response data is not of type list')
+            raise TypeError("Response data is not of type list")
 
         # Loop through each game and try to create it in the django database
 
         for game_data in data:
             try:
                 platform, _ = Platform.objects.get_or_create(
-                    name=game_data['platform'],
+                    name=game_data["platform"],
                 )
                 publisher, _ = Publisher.objects.get_or_create(
-                    name=game_data['publisher'],
+                    name=game_data["publisher"],
                 )
                 developer, _ = Developer.objects.get_or_create(
-                    name=game_data['developer'],
+                    name=game_data["developer"],
                 )
 
                 game, created = Game.objects.get_or_create(
-                    title=game_data['title'],
-                    genre=game_data['genre'],
-                    description=game_data['short_description'],
-                    release_date=game_data['release_date'],
+                    title=game_data["title"],
+                    genre=game_data["genre"],
+                    description=game_data["short_description"],
+                    release_date=game_data["release_date"],
                     platform=platform,
                     publisher=publisher,
                     developer=developer,
@@ -80,11 +80,11 @@ def get_games_from_api(request: HttpRequest) -> HttpResponse:
 
                 if created:
                     success_count += 1
-                    logger.debug(f'Successfully imported {game.title}')
+                    logger.debug(f"Successfully imported {game.title}")
                 else:
                     fail_count += 1
                     logger.warning(
-                        f'{game.title} already exists in the database',
+                        f"{game.title} already exists in the database",
                     )
 
             except Exception as e:
@@ -94,20 +94,20 @@ def get_games_from_api(request: HttpRequest) -> HttpResponse:
                 )
 
         context: dict[str, int | models.BaseManager[Game]] = {
-            'success_count': success_count,
-            'fail_count': fail_count,
-            'total_games': len(data),
-            'games': Game.objects.all(),
+            "success_count": success_count,
+            "fail_count": fail_count,
+            "total_games": len(data),
+            "games": Game.objects.all(),
         }
         return render(
             request=request,
-            template_name='game/success.html',
+            template_name="game/success.html",
             context=context,
         )
 
     except Exception as e:
-        logger.error(f'An unexpected error occurred: {str(e)}')
-        return render(request=request, template_name='game/error.html')
+        logger.error(f"An unexpected error occurred: {str(e)}")
+        return render(request=request, template_name="game/error.html")
 
 
 def post_games(request: HttpRequest) -> HttpResponse:
@@ -121,8 +121,8 @@ def post_games(request: HttpRequest) -> HttpResponse:
         JsonResponse: JSON response indicating success or error.
     """
 
-    if not request.method == 'POST':
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+    if not request.method == "POST":
+        return JsonResponse({"status": "error", "message": "Invalid request method"})
 
     games: models.BaseManager[Game] = Game.objects.all()
     success_count: int = 0
@@ -131,17 +131,17 @@ def post_games(request: HttpRequest) -> HttpResponse:
     # Loop through each game and send its data to the FastAPI endpoint
     for game in games:
         post_data = {
-            'title': game.title,
-            'genre': game.genre,
-            'release_date': game.release_date.isoformat(),
-            'description': game.description,
-            'platform': game.platform.name,
-            'publisher': game.publisher.name,
-            'developer': game.developer.name,
+            "title": game.title,
+            "genre": game.genre,
+            "release_date": game.release_date.isoformat(),
+            "description": game.description,
+            "platform": game.platform.name,
+            "publisher": game.publisher.name,
+            "developer": game.developer.name,
         }
 
         response: requests.Response = requests.post(
-            url=f'{config.fastapi.url}/game',
+            url=f"{config.fastapi.url}/game",
             json=post_data,
             auth=HTTPBasicAuth(
                 config.fastapi.auth.user,
@@ -157,15 +157,15 @@ def post_games(request: HttpRequest) -> HttpResponse:
             logger.warning(response.text)
 
     if fail_count == 0:
-        logger.info(f'All {success_count} games sent successfully')
+        logger.info(f"All {success_count} games sent successfully")
     else:
         logger.info(
-            f'{success_count} games sent successfully, {fail_count} games failed',
+            f"{success_count} games sent successfully, {fail_count} games failed",
         )
 
     context: dict[str, int] = {
-        'fail_count': fail_count,
-        'success_count': success_count,
-        'total_games': len(games),
+        "fail_count": fail_count,
+        "success_count": success_count,
+        "total_games": len(games),
     }
-    return render(request=request, template_name='game/post.html', context=context)
+    return render(request=request, template_name="game/post.html", context=context)

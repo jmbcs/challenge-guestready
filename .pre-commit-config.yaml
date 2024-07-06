@@ -1,4 +1,4 @@
-exclude: '^(.*)/migrations/.*'
+exclude: "^(.*)/migrations/.*"
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -10,20 +10,19 @@ repos:
       - id: check-added-large-files
       - id: check-merge-conflict
       - id: check-ast
-      - id: double-quote-string-fixer
       - id: debug-statements
       - id: check-toml
       - id: check-json
       - id: check-xml
       - id: requirements-txt-fixer
       - id: no-commit-to-branch
-        args: ['--branch', 'main']
+        args: ["--branch", "main"]
 
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.5.0
+  - repo: https://github.com/psf/black
+    rev: stable
     hooks:
-      - id: ruff
-        args: [--fix]
+      - id: black
+        language_version: python3.11
 
   - repo: https://github.com/PyCQA/flake8
     rev: 3.9.2
@@ -37,9 +36,9 @@ repos:
   - repo: https://github.com/hhatto/autopep8
     rev: v2.3.1
     hooks:
-    -   id: autopep8
+      - id: autopep8
 
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v3.1.0
     hooks:
-    -   id: add-trailing-comma
+      - id: add-trailing-comma

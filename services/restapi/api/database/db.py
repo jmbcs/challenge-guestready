@@ -15,12 +15,17 @@ Base = declarative_base()
 
 # Create an engine instance
 engine: Engine = create_engine(
-    config.db.get_url(), echo=False, pool_size=100, max_overflow=10,
+    config.db.get_url(),
+    echo=False,
+    pool_size=100,
+    max_overflow=10,
 )
 
 # Create a configured "Session" class
 SessionLocal: sessionmaker = sessionmaker(
-    autocommit=False, autoflush=False, bind=engine,
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
 )
 
 
@@ -38,12 +43,12 @@ def get_db_session() -> Generator[Session, Any, None]:
         session.commit()
     except Exception as e:
         session.rollback()
-        log.error(f'Session rollback due to: {e}')
+        log.error(f"Session rollback due to: {e}")
         raise e
     finally:
         end_time = time.time()
         log.debug(
-            f'DB Total Session Query Time: {(end_time - start_time):.4f} seconds',
+            f"DB Total Session Query Time: {(end_time - start_time):.4f} seconds",
         )
         session.close()
 

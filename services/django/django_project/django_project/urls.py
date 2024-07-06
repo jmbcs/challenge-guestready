@@ -22,6 +22,6 @@ from django.urls import include, path
 
 # Create your views here.
 urlpatterns = [
-    path('', include('game.urls')),
-    path('admin/', admin.site.urls),
+    path("", include("game.urls")),
+    path("admin/", admin.site.urls),
 ]

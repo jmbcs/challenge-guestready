@@ -22,7 +22,7 @@ from pydantic_settings import (
 
 from .logger import LoggerConfig
 
-_Config__SERVICE_PREFIX: str = 'guestready__'
+_Config__SERVICE_PREFIX: str = "guestready__"
 
 
 class APIAuthentication(BaseModel):
@@ -67,9 +67,9 @@ class Settings(BaseSettings):
     games_url: str
 
     model_config = SettingsConfigDict(
-        env_file='django.env',
-        env_nested_delimiter='__',
-        env_file_encoding='utf-8',
+        env_file="django.env",
+        env_nested_delimiter="__",
+        env_file_encoding="utf-8",
         env_prefix=_Config__SERVICE_PREFIX,
     )
 
@@ -110,17 +110,17 @@ config.logger.configure_logger()
 
 # Django logging settings
 LOGGING: dict[str, Any] = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
         },
     },
-    'loggers': {
-        'django': {
-            'level': 'INFO',
-            'propagate': True,
+    "loggers": {
+        "django": {
+            "level": "INFO",
+            "propagate": True,
         },
     },
 }
@@ -134,7 +134,7 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY: str = 'django-insecure-kvrzct796ke69vr#&)q%beonpcw785ili343byzz1qshg2$p@9'
+SECRET_KEY: str = "django-insecure-kvrzct796ke69vr#&)q%beonpcw785ili343byzz1qshg2$p@9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG: bool = True
@@ -145,55 +145,55 @@ ALLOWED_HOSTS: list = []
 # Application definition
 
 INSTALLED_APPS: list[str] = [
-    'template_partials',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'game',
-    'rest_framework',
+    "template_partials",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "game",
+    "rest_framework",
 ]
 
 MIDDLEWARE: list[str] = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF: str = 'django_project.urls'
+ROOT_URLCONF: str = "django_project.urls"
 
 TEMPLATES: list[dict[str, Any]] = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION: str = 'django_project.wsgi.application'
+WSGI_APPLICATION: str = "django_project.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES: dict[str, Any] = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     },
 }
 
@@ -203,16 +203,16 @@ DATABASES: dict[str, Any] = {
 
 AUTH_PASSWORD_VALIDATORS: list[dict[str, Any]] = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -220,9 +220,9 @@ AUTH_PASSWORD_VALIDATORS: list[dict[str, Any]] = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE: str = 'en-us'
+LANGUAGE_CODE: str = "en-us"
 
-TIME_ZONE: str = 'UTC'
+TIME_ZONE: str = "UTC"
 
 USE_I18N: bool = True
 
@@ -232,9 +232,9 @@ USE_TZ: bool = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL: str = 'static/'
+STATIC_URL: str = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD: str = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD: str = "django.db.models.BigAutoField"

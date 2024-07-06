@@ -11,7 +11,7 @@ class PlatformSchema(BaseModel):
         name (str): The name of the platform.\n
     """
 
-    name: str = Field(description='The name of the platform.')
+    name: str = Field(description="The name of the platform.")
 
 
 class PublisherSchema(BaseModel):
@@ -22,7 +22,7 @@ class PublisherSchema(BaseModel):
         name (str): The name of the publisher.\n
     """
 
-    name: str = Field(description='The name of the publisher.')
+    name: str = Field(description="The name of the publisher.")
 
 
 class DeveloperSchema(BaseModel):
@@ -33,7 +33,7 @@ class DeveloperSchema(BaseModel):
         name (str): The name of the developer.\n
     """
 
-    name: str = Field(description='The name of the developer.')
+    name: str = Field(description="The name of the developer.")
 
 
 class GameSchema(BaseModel):
@@ -50,21 +50,21 @@ class GameSchema(BaseModel):
         developer (str): The name of the developer of the game.\n
     """
 
-    title: str = Field(description='The title of the game.')
-    genre: str = Field(description='The genre of the game.')
-    release_date: date = Field(description='The release date of the game.')
-    description: str = Field(description='The description of th egame')
+    title: str = Field(description="The title of the game.")
+    genre: str = Field(description="The genre of the game.")
+    release_date: date = Field(description="The release date of the game.")
+    description: str = Field(description="The description of th egame")
     platform: str = Field(
-        description='The name of the platform on which the game is available.',
+        description="The name of the platform on which the game is available.",
     )
     publisher: str = Field(
-        description='The name of the publisher of the game.',
+        description="The name of the publisher of the game.",
     )
     developer: str = Field(
-        description='The name of the developer of the game.',
+        description="The name of the developer of the game.",
     )
 
-    @field_validator('release_date')
+    @field_validator("release_date")
     def validate_release_date(cls, v):
         """
         Validate the release date to ensure it is not in the future.
@@ -80,11 +80,11 @@ class GameSchema(BaseModel):
         """
 
         if v > date.today():
-            raise ValueError('Release date cannot be in the future.')
+            raise ValueError("Release date cannot be in the future.")
         return v
 
 
 # Pydantic model for the response message
 class GameCreateResponse(BaseModel):
-    message: str = 'Game created successfully.'
+    message: str = "Game created successfully."
     game: GameSchema
