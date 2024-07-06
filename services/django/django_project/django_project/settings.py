@@ -154,6 +154,11 @@ INSTALLED_APPS: list[str] = [
     "django.contrib.staticfiles",
     "game",
     "rest_framework",
+    "health_check",
+    "health_check.db",  # stock Django health checkers
+    "health_check.cache",
+    "health_check.storage",
+    "health_check.contrib.migrations",
 ]
 
 MIDDLEWARE: list[str] = [
