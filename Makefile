@@ -33,8 +33,11 @@ down: ## Stops all containers
 remove: ## Remove all containers and volumes
 	@docker compose -f docker-compose.yml down --volumes --remove-orphans
 
-tests: ## Run mypy, pytest and tox in the repo (development)
+tox: ## Run tox with mypy, pytest and precommit in the repo (development)
 	@tox
 
 dev.api: ## Run the API directly in the terminal (development)
 	@cd services/restapi; python3 api
+
+dev.django:## Run the Django Project directly in the terminal (development)
+	@cd services/django/django_project; python3 manage.py runserver
