@@ -55,9 +55,8 @@ get_game_responses: dict[int | str, dict[str, Any]] = {
         "description": "Found - Games returned from the database",
         "content": {
             "application/json": {
-                "example": {
-                    "message": "Game created successfully.",
-                    "game": {
+                "example": [
+                    {
                         "title": "Example Game",
                         "genre": "Action",
                         "description": "Example Description",
@@ -66,7 +65,7 @@ get_game_responses: dict[int | str, dict[str, Any]] = {
                         "publisher": "Example Publisher",
                         "developer": "Example Developer",
                     },
-                },
+                ],
             },
         },
     },

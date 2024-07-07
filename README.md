@@ -62,13 +62,14 @@
 
 Watch the video below as a reference for the `Django` + `FastAPI` interaction.
 
+
 <hr>
 <details>
   <summary>
     <strong>CLICK HERE</strong> to show video of Django + FastAPI.
   </summary>
   <p align="center">
-    <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/b7d6f3be-5ca6-4098-9e7b-bf01fd171bd1" controls width="640" height="360"></video>
+    <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/002a0f38-587b-4627-a7cd-d1f6152b1ccd" controls width="640" height="360"></video>
   </p>
 </details>
 <hr>

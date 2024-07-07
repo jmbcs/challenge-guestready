@@ -2,14 +2,13 @@ import logging
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.query import Query
-
 from api.app.models import Developer, Game, Platform, Publisher
 from api.app.responses import create_game_responses, get_game_responses
 from api.app.schemas import GameCreateResponse, GameSchema
 from api.database.db import get_db
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from sqlalchemy.orm.query import Query
 
 router: APIRouter = APIRouter(tags=["Games"])
 logger: logging.Logger = logging.getLogger(__name__)
@@ -35,12 +34,6 @@ async def get_games(
             query = query.join(Game.platform).filter(Platform.name == platform)
 
         db_games: list[Game] = query.all()
-
-        if not db_games:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="No game found based on parameters",
-            )
 
         games: list[GameSchema] = [
             GameSchema(

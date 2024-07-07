@@ -7,6 +7,7 @@ from api.app.app import app
 from api.app.models import Developer, Game, Platform, Publisher
 from api.database.db import Base, get_db
 from api.settings import config
+from fastapi import status
 from fastapi.testclient import TestClient
 from sqlalchemy import Engine, create_engine
 from sqlalchemy.orm import sessionmaker
@@ -88,10 +89,10 @@ def create_test_data(db_session):
     """
     Create test data for the database.
     """
-    platform = Platform(name="Test Platform")
-    developer = Developer(name="Test Developer")
-    publisher = Publisher(name="Test Publisher")
-    game1 = Game(
+    platform: Platform = Platform(name="Test Platform")
+    developer: Developer = Developer(name="Test Developer")
+    publisher: Publisher = Publisher(name="Test Publisher")
+    game1: Game = Game(
         title="Game 1",
         genre="Action",
         description="Description of Game 1",
@@ -100,7 +101,7 @@ def create_test_data(db_session):
         publisher=publisher,
         release_date=date(2024, 1, 1),
     )
-    game2 = Game(
+    game2: Game = Game(
         title="Game 2",
         genre="Adventure",
         description="Description of Game 2",
@@ -123,24 +124,32 @@ def create_test_data(db_session):
 @pytest.mark.parametrize(
     "query_params, expected_status_code, expected_titles",
     [
-        ({}, 200, ["Game 1", "Game 2"]),  # No filters
-        ({"genre": "Action"}, 200, ["Game 1"]),  # Filter by genre
+        ({}, status.HTTP_200_OK, ["Game 1", "Game 2"]),  # No filters
+        (
+            {"genre": "Action"},
+            status.HTTP_200_OK,
+            ["Game 1"],
+        ),  # Filter by genre
         (
             {"release_date": "2024-01-01"},
-            200,
+            status.HTTP_200_OK,
             ["Game 1"],
         ),  # Filter by release_date
         (
             {"platform": "Test Platform"},
-            200,
+            status.HTTP_200_OK,
             ["Game 1", "Game 2"],
         ),  # Filter by platform
         (
             {"genre": "Adventure", "release_date": "2023-12-31"},
-            200,
+            status.HTTP_200_OK,
             ["Game 2"],
         ),  # Multiple filters
-        ({"platform": "Nonexistent Platform"}, 404, []),  # Nonexistent platform
+        (
+            {"platform": "Nonexistent Platform"},
+            status.HTTP_200_OK,
+            [],
+        ),  # Nonexistent platform
     ],
 )
 def test_get_games(
@@ -158,7 +167,7 @@ def test_get_games(
         headers=_get_auth_headers(),
     )
     assert response.status_code == expected_status_code
-    if expected_status_code == 200:
+    if expected_status_code == status.HTTP_200_OK:
         returned_titles = [game["title"] for game in response.json()]
         assert all(title in returned_titles for title in expected_titles)
 
@@ -168,7 +177,7 @@ def test_get_games_by_developer(create_test_data):
     Test the /games/{developer} endpoint with a valid developer.
     """
     response = client.get("/games/Test Developer", headers=_get_auth_headers())
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     returned_titles = [game["title"] for game in response.json()]
     assert "Game 1" in returned_titles
     assert "Game 2" in returned_titles
@@ -182,7 +191,7 @@ def test_get_games_by_nonexistent_developer(create_test_data):
         "/games/Nonexistent Developer",
         headers=_get_auth_headers(),
     )
-    assert response.status_code == 404
+    assert response.status_code == status.HTTP_404_NOT_FOUND
     assert response.json()["detail"] == "Developer not found"
 
 
@@ -190,7 +199,7 @@ def test_create_game(create_test_data):
     """
     Test creating a new game.
     """
-    game_data = {
+    game_data: dict[str, str] = {
         "title": "New Test Game",
         "genre": "Adventure",
         "description": "A new test game",
@@ -205,7 +214,7 @@ def test_create_game(create_test_data):
         json=game_data,
         headers=_get_auth_headers(),
     )
-    assert response.status_code == 201
+    assert response.status_code == status.HTTP_201_CREATED
     assert response.json()["game"]["title"] == "New Test Game"
 
 
@@ -213,7 +222,7 @@ def test_create_existing_game(create_test_data):
     """
     Test creating a game with a title that already exists.
     """
-    game_data = {
+    game_data: dict[str, str] = {
         "title": "Game 1",
         "genre": "Action",
         "description": "A duplicate test game",
@@ -228,7 +237,7 @@ def test_create_existing_game(create_test_data):
         json=game_data,
         headers=_get_auth_headers(),
     )
-    assert response.status_code == 409
+    assert response.status_code == status.HTTP_409_CONFLICT
     assert (
         response.json()["detail"]["message"]
         == f'A game with the same title {game_data["title"]} already exists.'
@@ -239,7 +248,7 @@ def test_create_game_missing_fields(create_test_data):
     """
     Test creating a game with missing required fields.
     """
-    game_data = {
+    game_data: dict[str, str] = {
         "title": "Incomplete Game",
         "genre": "Action",
     }
@@ -249,5 +258,7 @@ def test_create_game_missing_fields(create_test_data):
         json=game_data,
         headers=_get_auth_headers(),
     )
-    assert response.status_code == 422  # Unprocessable Entity
+    assert (
+        response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    )  # Unprocessable Entity
     assert "detail" in response.json()
