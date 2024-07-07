@@ -53,6 +53,7 @@
 4. Access FastAPI at [http://localhost:8001](http://localhost:8001)
    - User: `guestready`
    - Password: `test123`
+   - Documentation for endpoints can be found at [http://localhost:8001/redoc](http://localhost:8001/redoc)
 
 Watch the video below as a reference for the `Django` + `FastAPI` interaction.
 
@@ -81,12 +82,14 @@ Watch the video below as a reference for the `Django` + `FastAPI` interaction.
 
 - Each service runs in its own Docker container.
 - Each service provides logs.
+- Each service waits for their dependecy to become healthy.
+  - **Example**: `FastAPI` service will only connect to `PostgreSQL` after the container reports to be `healhy`.
 - Service configurations are managed via environment variables using `pydantic` basesettings.
 - Services communicate within the Docker network but are also exposed on the host for easy access.
 - Database migrations for PostgreSQL are handled by `alembic` integrated with `FastAPI`.
 - PostgreSQL database initialization includes setting up users and databases for the REST API service.
 
-## Avalailable commands
+## Available commands
 
 Run `make` to check the available commands
 
@@ -100,7 +103,7 @@ Run `make` to check the available commands
 
 1. **Install `direnv`**: Visit [direnv.net](https://direnv.net/) and follow the installation instructions for your operating system.
 
-2. **Initialize `direnv`**: After installing `direnv`, run the command `direnv allow` in your project directory. This allows `direnv` to load the environment variables specified in `.envrc` into your shell session automatically.
+2. **Initialize `direnv`**: After installing `direnv`, run the command `direnv allow` in your project directory. This allows `direnv` to load the environment variables and any script specified in `.envrc` into your shell session automatically.
 
 3. **Automatic Dependency Installation**: Ensure all dependencies are installed automatically once `direnv` is set up.
 
@@ -141,13 +144,61 @@ You can check the output of the command `make tox` by refering to the video belo
   <summary>
     <strong>CLICK HERE</strong> to show video of make tox.
   </summary>
-  <p align="center">
-    <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/f4fe80d8-5a8e-4e3c-90af-3d257555db8a" controls width="640" height="360"></video>
+  <img src="images/make_commands.png" width=600 />
   </p>
 </details>
 <hr>
 
 ## Testing - FastAPI Response Performance
+
+- If you have `Postman`, `Thunder Client` or `Flashpost`, you can import the provided collection file to run all tests:
+
+  - [.postman/guestready_challenge.postman_collection.json](.postman/guestready_challenge.postman_collection.json)
+
+- This will have some requests already setup that you can use to test the endpoints.
+<p align="center">
+  <img src="images/collection.png" width=600 />
+</p>
+
+- Example for a `GET` request
+
+<p align="center">
+  <img src="images/collection_endpoint.png" width=600 />
+</p>
+
+<hr>
+<details>
+  <summary>
+    <strong>CLICK HERE</strong> to show the peformance of the endpoint when receiving requests up to 100 Virtual Users (postman performance test).
+  </summary>
+  <p align="center">
+    <img src="images/test_get_all_games.png" width=600 alt="Image showing results of retrieving all games.">
+    <br>
+    This image displays the results of a test for retrieving all games.
+        <br>
+    <strong>GET</strong>: http://localhost:8001/games
+    <br>
+    <img src="images/test_get_games_by_dev.png" width=600 alt="Image showing results of retrieving games by developer.">
+    <br>
+    This image illustrates the test results for retrieving games filtered by developer.
+    <br>
+    <strong>GET</strong>: http://localhost:8001/games/{developer}
+    <br>
+    <img src="images/test_get_games_filtered.png" width=600 alt="Image showing results of retrieving filtered games.">
+    <br>
+    In this image, the test results show games filtered based on certain criteria (with query params)
+    <br>
+    <strong>GET</strong>: http://localhost:8001/games
+    <br>
+    <img src="images/test_post_game.png" width=600 alt="Image showing results of posting a new game.">
+    <br>
+    This image represents the test outcome of adding or posting a new game.
+    <br>
+    <strong>POST</strong>: http://localhost:8001/game
+    <br>
+  </p>
+</details>
+<hr>
 
 ## Logging
 
