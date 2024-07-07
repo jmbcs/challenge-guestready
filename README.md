@@ -12,7 +12,8 @@
 - [Quick Start and Deployment](#quick-start-and-deployment)
 - [Proposed Solution Architecture](#proposed-solution-architecture)
   - [Key Features:](#key-features)
-  - [How the services are configuired](#how-the-services-are-configuired)
+  - [Postgresql Initialization](#postgresql-initialization)
+  - [Service Configuration](#service-configuration)
 - [Available commands](#available-commands)
 - [Setting Up Your Development Environment](#setting-up-your-development-environment)
   - [Development and Debugging](#development-and-debugging)
@@ -93,12 +94,14 @@ Watch the video below as a reference for the `Django` + `FastAPI` interaction.
 - Database migrations for PostgreSQL are handled by `alembic` integrated with `FastAPI`.
 - PostgreSQL database initialization includes setting up users and databases for the REST API service.
 
-<!-- TOC --><a name="how-the-services-are-configuired"></a>
+<!-- TOC --><a name="postgresql-initialization"></a>
 
 ### Postgresql Initialization
 
 - The `script` at `.docker-compose/initdb/initdb.sh` is passed into `/docker-entrypoint-initdb.d` which is automatically run when the container starts.
 - Database migrations are applied when FastAPI connects to PostgreSQL using Alembic.
+
+<!-- TOC --><a name="service-configuration"></a>
 
 ### Service Configuration
 
