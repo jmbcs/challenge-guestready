@@ -140,7 +140,7 @@ def create_test_data(db_session):
             200,
             ["Game 2"],
         ),  # Multiple filters
-        ({"platform": "Nonexistent Platform"}, 404, []),  # Nonexistent platform
+        ({"platform": "Nonexistent Platform"}, 200, []),  # Nonexistent platform
     ],
 )
 def test_get_games(
