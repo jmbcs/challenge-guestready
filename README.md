@@ -42,13 +42,24 @@
 
 Watch the video below as a reference for the `Django` service + `FastAPI`
 
-https://github.com/jmbcs/challenge-guestready/assets/112523386/b7d6f3be-5ca6-4098-9e7b-bf01fd171bd1
+<hr>
+<details>
+  <summary>
+    <strong>CLICK HERE</strong> to show video of Django + FastAPI.
+  </summary>
+  <p align="center">
+    <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/b7d6f3be-5ca6-4098-9e7b-bf01fd171bd1" controls width="640" height="360"></video>
+  </p>
+</details>
+<hr>
 
 <!-- TOC --><a name="proposed-solution-architecture"></a>
 
 ## Proposed Solution Architecture
 
-![architecture](images/architecture.png)
+<p align="center">
+  <img src="images/architecture.png" width=400 />
+</p>
 
 <!-- TOC --><a name="key-features"></a>
 
@@ -86,10 +97,28 @@ To set up your development environment, follow these steps:
 
 Reference the following video for guidance on using `direnv` to automatically set up your environment using the `.envrc` file
 
-https://github.com/jmbcs/challenge-guestready/assets/112523386/7cda6642-c9f9-46e2-bd42-a1e4ff663cea
+<hr>
+<details>
+  <summary>
+    <strong>CLICK HERE</strong> to show video of direnv.
+  </summary>
+  <p align="center">
+    <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/7cda6642-c9f9-46e2-bd42-a1e4ff663cea" controls width="640" height="360"></video>
+  </p>
+</details>
+<hr>
 
 <!-- TOC --><a name="video-test"></a>
 
 ## Video - Test
 
-https://github.com/jmbcs/challenge-guestready/assets/112523386/f4fe80d8-5a8e-4e3c-90af-3d257555db8a
+<hr>
+<details>
+  <summary>
+    <strong>CLICK HERE</strong> to show video of testing.
+  </summary>
+  <p align="center">
+    <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/f4fe80d8-5a8e-4e3c-90af-3d257555db8a" controls width="640" height="360"></video>
+  </p>
+</details>
+<hr>
