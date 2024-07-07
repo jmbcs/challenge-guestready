@@ -173,29 +173,24 @@ You can check the output of the command `make tox` by refering to the video belo
   </summary>
   <p align="center">
     <img src="images/test_get_all_games.png" width=600 alt="Image showing results of retrieving all games.">
-    <br>
     This image displays the results of a test for retrieving all games.
         <br>
     <strong>GET</strong>: http://localhost:8001/games
     <br>
     <br>
     <img src="images/test_get_games_by_dev.png" width=600 alt="Image showing results of retrieving games by developer.">
-    <br>
-      <br>
-    This image illustrates the test results for retrieving games filtered by developer.
+      This image illustrates the test results for retrieving games filtered by developer.
     <br>
     <strong>GET</strong>: http://localhost:8001/games/{developer}
     <br>
     <br>
     <img src="images/test_get_games_filtered.png" width=600 alt="Image showing results of retrieving filtered games.">
-    <br>
     In this image, the test results show games filtered based on certain criteria (with query params)
     <br>
     <strong>GET</strong>: http://localhost:8001/games
     <br>
     <br>
     <img src="images/test_post_game.png" width=600 alt="Image showing results of posting a new game.">
-    <br>
     This image represents the test outcome of adding or posting a new game.
     <br>
     <strong>POST</strong>: http://localhost:8001/game
