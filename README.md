@@ -9,14 +9,18 @@
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
 - [Requirements](#requirements)
-- [Quick Start](#quick-start)
+- [Quick Start and Deployment](#quick-start-and-deployment)
 - [Proposed Solution Architecture](#proposed-solution-architecture)
   - [Key Features:](#key-features)
-- [Development Environment Setup](#development-environment-setup)
+  - [How the services are configuired](#how-the-services-are-configuired)
+- [Available commands](#available-commands)
+- [Setting Up Your Development Environment](#setting-up-your-development-environment)
   - [Development and Debugging](#development-and-debugging)
-  - [Additional Resources](#additional-resources)
-- [Testing](#testing)
-- [Video - Test](#video-test)
+- [Testing - Code quality](#testing-code-quality)
+- [Testing - FastAPI Response Performance](#testing-fastapi-response-performance)
+- [Logging](#logging)
+- [PostgreSQL Queries Optimization](#postgresql-queries-optimization)
+- [Final Remarks and Suggestions](#final-remarks-and-suggestions)
 
 <!-- TOC end -->
 
@@ -29,7 +33,7 @@
 - Docker Compose: `v2.28.1`
 - Make: `v4.3`
 
-<!-- TOC --><a name="quick-start"></a>
+<!-- TOC --><a name="quick-start-and-deployment"></a>
 
 ## Quick Start and Deployment
 
@@ -89,7 +93,11 @@ Watch the video below as a reference for the `Django` + `FastAPI` interaction.
 - Database migrations for PostgreSQL are handled by `alembic` integrated with `FastAPI`.
 - PostgreSQL database initialization includes setting up users and databases for the REST API service.
 
+<!-- TOC --><a name="how-the-services-are-configuired"></a>
+
 ### How the services are configuired
+
+<!-- TOC --><a name="available-commands"></a>
 
 ## Available commands
 
@@ -99,7 +107,7 @@ Run `make` to check the available commands
   <img src="images/make_commands.png" width=600 />
 </p>
 
-<!-- TOC --><a name="development-environment-setup"></a>
+<!-- TOC --><a name="setting-up-your-development-environment"></a>
 
 ## Setting Up Your Development Environment
 
@@ -108,6 +116,8 @@ Run `make` to check the available commands
 2. **Initialize `direnv`**: After installing `direnv`, run the command `direnv allow` in your project directory. This allows `direnv` to load the environment variables and any script specified in `.envrc` into your shell session automatically.
 
 3. **Automatic Dependency Installation**: Ensure all dependencies are installed automatically once `direnv` is set up.
+
+<!-- TOC --><a name="development-and-debugging"></a>
 
 ### Development and Debugging
 
@@ -128,7 +138,7 @@ For detailed guidance on using `direnv` and setting up your environment using th
 </details>
 <hr>
 
-<!-- TOC --><a name="video-test"></a>
+<!-- TOC --><a name="testing-code-quality"></a>
 
 ## Testing - Code quality
 
@@ -150,6 +160,8 @@ You can check the output of the command `make tox` by refering to the video belo
   </p>
 </details>
 <hr>
+
+<!-- TOC --><a name="testing-fastapi-response-performance"></a>
 
 ## Testing - FastAPI Response Performance
 
@@ -205,6 +217,8 @@ You can check the output of the command `make tox` by refering to the video belo
 </details>
 <hr>
 
+<!-- TOC --><a name="logging"></a>
+
 ## Logging
 
 - FastAPI service logs
@@ -221,8 +235,35 @@ You can configure the logging behavior using the following environment variables
 - `guestready__logger__level`: Set the desired logging level (e.g., "DEBUG").
 - `guestready__logger__enable_log_color`: Toggle to enable or disable log coloring (e.g., True or False). (log color should be disabled if you want to store logs in files)
 
+<!-- TOC --><a name="postgresql-queries-optimization"></a>
+
 ## PostgreSQL Queries Optimization
 
 The queries have been optimized using SQLAlchemy ORM. Optimization involved setting indexes on `developer`, `release_date`, `genre`, and `platform` columns, as these are frequently used for filtering.
 
+<!-- TOC --><a name="final-remarks-and-suggestions"></a>
+
 ## Final Remarks and Suggestions
+
+1. **Consolidate Configurations**:
+
+   - Streamline management by consolidating configurations for both the Django server and FastAPI into a single `.toml` file.
+
+2. **Refine `tox.ini` Configuration**:
+
+   - Enhance the effectiveness of the `tox.ini` file with a more refined configuration.
+
+3. **Adopt `pytest` for Testing**:
+
+   - Consider using `pytest` for testing in Django alongside the traditional `manage.py test` approach to leverage its advanced features.
+
+4. **Implement Versioning**:
+
+   - Add some form of versioning to the different services to keep track of changes and updates.
+
+5. **Secure Credential Management**:
+
+   - Ensure that credentials are not stored in `.env` files for improved security.
+
+6. **Local Installation of Frontend Libraries**:
+   - Avoid using CDN for frontend libraries like `htmx`, `tailwind`, and `daisyui` due to security concerns. Instead, install them locally.
