@@ -18,7 +18,7 @@ class Platform(Base):
     __tablename__ = "platform"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String, nullable=False, unique=True, index=True)
+    name = Column(String(100), nullable=False, unique=True, index=True)
 
     games: Mapped[List["Game"]] = relationship(
         "Game",
@@ -42,7 +42,7 @@ class Publisher(Base):
     __tablename__ = "publisher"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String, nullable=False, unique=True)
+    name = Column(String(100), nullable=False, unique=True)
 
     games: Mapped[List["Game"]] = relationship(
         "Game",
@@ -66,7 +66,7 @@ class Developer(Base):
     __tablename__ = "developer"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String, nullable=False, unique=True, index=True)
+    name = Column(String(100), nullable=False, unique=True, index=True)
 
     games: Mapped[List["Game"]] = relationship(
         "Game",
@@ -98,8 +98,8 @@ class Game(Base):
     __tablename__ = "game"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    title = Column(String, nullable=False)
-    genre = Column(String, nullable=False, index=True)
+    title = Column(String(255), nullable=False)
+    genre = Column(String(100), nullable=False, index=True)
     description = Column(String, nullable=False)
     release_date = Column(Date, nullable=False, index=True)
 
