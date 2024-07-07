@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Guestready Challenge</title>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css"
+              rel="stylesheet"
+              type="text/css" />
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.12"
+                integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+                crossorigin="anonymous"></script>
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <link rel="icon"
+              href="https://img.icons8.com/?size=100&id=p4IZ3gBGGvWo&format=png&color=000000"
+              type="image/x-icon">
+    </head>
+    <body>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        <footer>
+            <div class="max-w-6xl mx-auto py-10 px-6 xl:px-0 md:flex justify-between">
+                <div class="footer-left mb-12 md:mb-0">
+                    <h2 class="mb-5 uppercase text-lg font-medium">About</h2>
+                    <p class="text-gray-700">
+                        Created by
+                        <a href="https://jmbcs.github.io/portfolio/"
+                           class="font-medium text-[#71192e] hover:text-black hover:underline">Júlio Silva</a>
+                    </p>
+                </div>
+                <div class="footer-right">
+                    <h2 class="mb-5 uppercase text-lg font-medium">Links</h2>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="https://www.linkedin.com/in/julio-miguel-silva/"
+                               class="font-medium text-[#71192e] hover:text-black hover:underline">Linkedin</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/jmbcs"
+                               class="font-medium text-[#71192e] hover:text-black hover:underline">Github</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+        <!-- HTMX library (included via CDN) -->
+        <script src="https://unpkg.com/htmx.org@1.9.12"
+                integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+                crossorigin="anonymous"></script>
+    </body>
+</html>

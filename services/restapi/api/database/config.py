@@ -19,4 +19,4 @@ class PostgresqlDBConfig(BaseModel):
         Returns:
             str: The Postgresql connection URL.
         """
-        return f'postgresql://{self.username}:{self.password.get_secret_value()}@{self.host}:{self.port}/{self.database}'
+        return f"postgresql://{self.username}:{self.password.get_secret_value()}@{self.host}:{self.port}/{self.database}"

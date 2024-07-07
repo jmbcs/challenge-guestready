@@ -13,15 +13,14 @@ services:
       context: ./services/restapi/.
       dockerfile: Dockerfile
     expose:
-      - 8000
-
+      - 8001
     ports:
-      - "8000:8000"
+      - "8001:8001"
 
     environment:
       guestready__api__auth__user: ${GUESTREADY__API_AUTH_USER?}
       guestready__api__auth__password: ${GUESTREADY__API_AUTH_PASSWORD?}
-      guestready__api__port: "8000"
+      guestready__api__port: "8001"
       guestready__logger__level: "DEBUG"
       guestready__logger__enable_log_color: True
       guestready__db__username: ${GUESTREADY__API_POSTGRES_USER?}
@@ -43,7 +42,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl --fail localhost:8000/health -u ${GUESTREADY__API_AUTH_USER?}:${GUESTREADY__API_AUTH_PASSWORD?}",
+          "curl --fail localhost:8001/health -u ${GUESTREADY__API_AUTH_USER?}:${GUESTREADY__API_AUTH_PASSWORD?}",
         ]
       interval: 1m
       timeout: 10s
@@ -88,3 +87,41 @@ services:
       timeout: 10s
       retries: 5
       start_interval: 5s
+      start_period: 5s
+
+  django_server:
+    container_name: django_server
+    build:
+      context: ./services/django/.
+      dockerfile: Dockerfile
+    expose:
+      - 8000
+    ports:
+      - "8000:8000"
+
+    environment:
+      guestready__fastapi__auth__user: ${GUESTREADY__API_AUTH_USER?}
+      guestready__fastapi__auth__password: ${GUESTREADY__API_AUTH_PASSWORD?}
+      guestready__fastapi__url: ${GUESTREADY__API__URL?}
+      guestready__games_url: ${GUESTREADY__GAMES__URL?}
+      guestready__logger__level: "DEBUG"
+      guestready__logger__enable_log_color: True
+    networks:
+      - guestready
+
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --silent --show-error --max-time 5 --write-out '%{http_code}' localhost:8000/health/ | grep -q '^200$'",
+        ]
+      interval: 1m
+      timeout: 10s
+      retries: 5
+      start_interval: 5s
+      start_period: 5s

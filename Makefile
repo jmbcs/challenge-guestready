@@ -33,8 +33,30 @@ down: ## Stops all containers
 remove: ## Remove all containers and volumes
 	@docker compose -f docker-compose.yml down --volumes --remove-orphans
 
-tests: ## Run mypy, pytest and tox in the repo (development)
+tox: ## Run tox with mypy, pytest and precommit in the repo (development)
 	@tox
+
+test : ## Run only tests (django and restapi pytest)  (development)
+	@tox -e py311,django
+
+mypy: ## Run only mypy  (development)
+	@tox -e mypy
+
+precommit :  ## Run only precommit  (development)
+	@tox -e pre-commit
+
+clean: ## Clean up cache and build directories (development)
+	@find . -type d -name "__pycache__" -exec rm -rf {} +
+	@find . -type d -name ".pytest_cache" -exec rm -rf {} +
+	@find . -type d -name ".tox" -exec rm -rf {} +
+	@find . -type d -name ".ruff_cache" -exec rm -rf {} +
+	@find . -type d -name "*.egg-info" -exec rm -rf {} +
+	@find . -type d -name "build" -exec rm -rf {} +
+	@find . -type f -name ".coverage" -exec rm -f {} +
+	@find . -type d -name ".mypy_cache" -exec rm -rf {} +
 
 dev.api: ## Run the API directly in the terminal (development)
 	@cd services/restapi; python3 api
+
+dev.django:## Run the Django Project directly in the terminal (development)
+	@cd services/django/django_project; python3 manage.py runserver

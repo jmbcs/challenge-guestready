@@ -1,0 +1,30 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="bg-white rounded-lg shadow-2xl p-8">
+        <h1 class="text-4xl font-extrabold text-center mb-8 text-gray-800">🎉 Import Successful! 🎉</h1>
+        <p class="text-xl mb-8 text-center text-gray-700">
+            <span class="text-green-600 font-bold">Success: {{ success_count }} / {{ total_games }}</span>
+            <br>
+            <span class="text-red-600 font-bold">Fail: {{ fail_count }} / {{ total_games }}</span>
+        </p>
+        <p class="text-xl mb-8 text-center text-gray-700">
+            Check the django service logs for more information on fail attempts.
+            <br>
+            The games shown below are all currently in the database.
+        </p>
+        <div class="flex justify-center mb-8">
+            <a href="{% url 'front_page' %}"
+               class="btn btn-primary btn-lg bg-[#71192e] border-none rounded-box text-white hover:bg-[#9e2540] transition-all duration-300">Back to Home</a>
+        </div>
+        {% if games %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for game in games %}
+                    <div class="bg-slate-300 p-6 rounded-md text-lg font-semibold text-center text-gray-800 shadow-md">
+                        {{ game.title }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-xl text-center text-red-500">No games imported.</p>
+        {% endif %}
+    </div>
+</div>

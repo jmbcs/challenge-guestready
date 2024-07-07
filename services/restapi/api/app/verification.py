@@ -1,8 +1,8 @@
 import logging
 
+from api.settings import config
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from settings import config
 
 logger = logging.getLogger(__name__)
 
@@ -12,10 +12,10 @@ security: HTTPBasic = HTTPBasic()
 # Define a dictionary to store user information
 users: dict[str, dict[str, str | bool]] = {
     config.api.auth.user: {
-        'password': config.api.auth.password,
-        'token': '',
-        'priviliged': True,
-    }
+        "password": config.api.auth.password,
+        "token": "",
+        "priviliged": True,
+    },
 }
 
 
@@ -36,12 +36,12 @@ def verification(creds: HTTPBasicCredentials = Depends(security)) -> bool:
     """
     username: str = creds.username
     password: str = creds.password
-    if username in users and password == users[username]['password']:
-        logger.debug('User Authenticated')
+    if username in users and password == users[username]["password"]:
+        logger.debug("User Authenticated")
         return True
     else:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Incorrect email or password',
-            headers={'WWW-Authenticate': 'Basic'},
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Basic"},
         )

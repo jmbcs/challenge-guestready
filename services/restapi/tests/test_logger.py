@@ -23,7 +23,7 @@ def test_logger_level(reset_logging):
     """
     Test that the LoggerConfig class correctly sets the logging level.
     """
-    with mock.patch('logging.getLogger') as mock_get_logger:
+    with mock.patch("logging.getLogger") as mock_get_logger:
         mock_logger = mock.Mock()
         mock_get_logger.return_value = mock_logger
 
@@ -41,8 +41,8 @@ def test_logger_format(reset_logging):
     """
     Test that the LoggerConfig class correctly sets the log format.
     """
-    custom_format = '%(name)s - %(levelname)s - %(message)s'
-    with mock.patch('logging.getLogger') as mock_get_logger:
+    custom_format = "%(name)s - %(levelname)s - %(message)s"
+    with mock.patch("logging.getLogger") as mock_get_logger:
         mock_logger = mock.Mock()
         mock_get_logger.return_value = mock_logger
 
@@ -63,7 +63,7 @@ def test_colored_formatter_enabled(reset_logging):
     """
     Test that the LoggerConfig class uses ColoredFormatter when color logging is enabled.
     """
-    with mock.patch('logging.getLogger') as mock_get_logger:
+    with mock.patch("logging.getLogger") as mock_get_logger:
         mock_logger = mock.Mock()
         mock_get_logger.return_value = mock_logger
 
@@ -83,7 +83,7 @@ def test_colored_formatter_disabled(reset_logging):
     """
     Test that the LoggerConfig class uses logging.Formatter when color logging is disabled.
     """
-    with mock.patch('logging.getLogger') as mock_get_logger:
+    with mock.patch("logging.getLogger") as mock_get_logger:
         mock_logger = mock.Mock()
         mock_get_logger.return_value = mock_logger
 

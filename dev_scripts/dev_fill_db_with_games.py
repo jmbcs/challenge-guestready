@@ -22,14 +22,14 @@ import requests
 from requests import Response
 
 # FastAPI endpoint
-URL: str = 'http://localhost:8000/game'
+URL: str = "http://localhost:8000/game"
 
 # Credentials for API authentication
-AUTH_USER: str = 'admin'
-AUTH_PASSWORD: str = 'test123'
+AUTH_USER: str = "admin"
+AUTH_PASSWORD: str = "test123"
 
 # Path to the JSON file containing game data
-FILE_PATH: str = 'dev_scripts/dev_games.json'
+FILE_PATH: str = "dev_scripts/dev_games.json"
 
 
 def add_game(game: dict[str, Any]) -> None:
@@ -42,27 +42,29 @@ def add_game(game: dict[str, Any]) -> None:
     try:
         # Filter and structure the game data to match the API requirements
         filtered_game: dict[str, Any] = {
-            'title': game['title'],
-            'description': game['short_description'],
-            'developer': game['developer'],
-            'genre': game['genre'],
-            'release_date': game['release_date'],
-            'publisher': game['publisher'],
-            'platform': game['platform'],
+            "title": game["title"],
+            "description": game["short_description"],
+            "developer": game["developer"],
+            "genre": game["genre"],
+            "release_date": game["release_date"],
+            "publisher": game["publisher"],
+            "platform": game["platform"],
         }
         # Send the POST request to the API endpoint
         response: Response = requests.post(
-            URL, json=filtered_game, auth=(AUTH_USER, AUTH_PASSWORD)
+            URL,
+            json=filtered_game,
+            auth=(AUTH_USER, AUTH_PASSWORD),
         )
         # Raise an exception for any HTTP errors
         response.raise_for_status()
 
         # Print the response from the server
-        print(f'Game added: {response.json()}')
+        print(f"Game added: {response.json()}")
 
     except requests.exceptions.RequestException as e:
         # Print the error if the request fails
-        print(f'Failed to add game: {e}')
+        print(f"Failed to add game: {e}")
 
 
 def load_games(file_path: str) -> list[Dict[str, Any]]:
@@ -75,7 +77,7 @@ def load_games(file_path: str) -> list[Dict[str, Any]]:
     Returns:
         Dict[str, Any]: The JSON data loaded from the file.
     """
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 

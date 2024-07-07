@@ -1,8 +1,9 @@
 from typing import List
 
-from api.database.db import Base
 from sqlalchemy import Column, Date, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, relationship
+
+from api.database.db import Base
 
 
 class Platform(Base):
@@ -15,12 +16,15 @@ class Platform(Base):
         games (list[Game]): The list of games available on this platform, defined through the relationship with the Game model.
     """
 
-    __tablename__ = 'platform'
+    __tablename__ = "platform"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, nullable=False, unique=True, index=True)
 
-    games: Mapped[List['Game']] = relationship('Game', back_populates='platform')
+    games: Mapped[List["Game"]] = relationship(
+        "Game",
+        back_populates="platform",
+    )
 
     def __repr__(self):
         return f"<Platform(id={self.id}, name='{self.name}')>"
@@ -36,12 +40,15 @@ class Publisher(Base):
         games (list[Game]): The list of games published by this publisher, defined through the relationship with the Game model.
     """
 
-    __tablename__ = 'publisher'
+    __tablename__ = "publisher"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, nullable=False, unique=True, index=True)
 
-    games: Mapped[List['Game']] = relationship('Game', back_populates='publisher')
+    games: Mapped[List["Game"]] = relationship(
+        "Game",
+        back_populates="publisher",
+    )
 
     def __repr__(self):
         return f"<Publisher(id={self.id}, name='{self.name}')>"
@@ -57,12 +64,15 @@ class Developer(Base):
         games (list[Game]): The list of games developed by this developer, defined through the relationship with the Game model.
     """
 
-    __tablename__ = 'developer'
+    __tablename__ = "developer"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, nullable=False, unique=True, index=True)
 
-    games: Mapped[List['Game']] = relationship('Game', back_populates='developer')
+    games: Mapped[List["Game"]] = relationship(
+        "Game",
+        back_populates="developer",
+    )
 
     def __repr__(self):
         return f"<Developer(id={self.id}, name='{self.name}')>"
@@ -86,7 +96,7 @@ class Game(Base):
         developer (Developer): The developer of the game, defined through the relationship with the Developer model.
     """
 
-    __tablename__ = 'game'
+    __tablename__ = "game"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     title = Column(String, nullable=False, index=True)
@@ -94,13 +104,22 @@ class Game(Base):
     description = Column(String, nullable=False)
     release_date = Column(Date, nullable=False, index=True)
 
-    platform_id = Column(Integer, ForeignKey('platform.id'), nullable=False)
-    publisher_id = Column(Integer, ForeignKey('publisher.id'), nullable=False)
-    developer_id = Column(Integer, ForeignKey('developer.id'), nullable=False)
+    platform_id = Column(Integer, ForeignKey("platform.id"), nullable=False)
+    publisher_id = Column(Integer, ForeignKey("publisher.id"), nullable=False)
+    developer_id = Column(Integer, ForeignKey("developer.id"), nullable=False)
 
-    platform: Mapped['Platform'] = relationship(Platform, back_populates='games')
-    publisher: Mapped['Publisher'] = relationship(Publisher, back_populates='games')
-    developer: Mapped['Developer'] = relationship(Developer, back_populates='games')
+    platform: Mapped["Platform"] = relationship(
+        Platform,
+        back_populates="games",
+    )
+    publisher: Mapped["Publisher"] = relationship(
+        Publisher,
+        back_populates="games",
+    )
+    developer: Mapped["Developer"] = relationship(
+        Developer,
+        back_populates="games",
+    )
 
     def __repr__(self):
         return f"<Game(id={self.id}, title='{self.title}', release_date={self.release_date}, genre='{self.genre}', platform='{self.platform.name}', publisher='{self.publisher.name}', developer='{self.developer.name}')>"
