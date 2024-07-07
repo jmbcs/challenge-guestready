@@ -89,7 +89,10 @@ Watch the video below as a reference for the `Django` + `FastAPI` interaction.
 ## Avalailable commands
 
 Run `make` to check the available commands
-![Makefile](images/make_commands.png)
+
+<p align="center">
+  <img src="images/make_commands.png" width=600 />
+</p>
 
 <!-- TOC --><a name="development-environment-setup"></a>
 
@@ -126,15 +129,17 @@ For detailed guidance on using `direnv` and setting up your environment using th
 
 To ensure comprehensive code quality, the `make tox` command performs the following tasks:
 
-1. Executes all `pytest` tests for `fastapi`, located at [services/restapi/tests](services/restapi/tests), ensuring thorough testing.
-2. Executes tests for `django`, specifically targeting tests located at [services/django/django_project/game/tests.py].
+1. Executes all `pytest` tests for `fastapi`, located at [services/restapi/tests](services/restapi/tests).
+2. Executes tests for `django`, specifically targeting tests located at [services/django/django_project/game/tests.py](services/django/django_project/game/tests.py).
 3. Runs Pre-commit hooks across the repository to automatically enhance code formatting and perform other necessary checks.
 4. Validates proper Python code using `mypy`.
+
+You can check the output of the command `make tox` by refering to the video below.
 
 <hr>
 <details>
   <summary>
-    <strong>CLICK HERE</strong> to show video of testing.
+    <strong>CLICK HERE</strong> to show video of make tox.
   </summary>
   <p align="center">
     <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/f4fe80d8-5a8e-4e3c-90af-3d257555db8a" controls width="640" height="360"></video>
