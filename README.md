@@ -95,7 +95,52 @@ Watch the video below as a reference for the `Django` + `FastAPI` interaction.
 
 <!-- TOC --><a name="how-the-services-are-configuired"></a>
 
-### How the services are configuired
+### Postgresql Initialization
+
+- The `script` at `.docker-compose/initdb/initdb.sh` is passed into `/docker-entrypoint-initdb.d` which is automatically run when the container starts.
+- Database migrations are applied when FastAPI connects to PostgreSQL using Alembic.
+
+### Service Configuration
+
+- Some environment variables are read from `.env`.
+
+```yaml
+environment:
+  POSTGRES_USER: ${GUESTREADY__POSTGRES_USER?}
+  POSTGRES_PASSWORD: ${GUESTREADY__POSTGRES_PASSWORD?}
+  POSTGRES_API_DATABASE: ${GUESTREADY__API_POSTGRES_DATABASE?}
+  POSTGRES_API_USER: ${GUESTREADY__API_POSTGRES_USER?}
+  POSTGRES_API_PASSWORD: ${GUESTREADY__API_POSTGRES_PASSWORD?}
+  PGDATA: /data/postgres
+```
+
+- Django Service
+
+```yaml
+environment:
+  guestready__api__auth__user: ${GUESTREADY__API_AUTH_USER?}
+  guestready__api__auth__password: ${GUESTREADY__API_AUTH_PASSWORD?}
+  guestready__api__port: "8001"
+  guestready__logger__level: "DEBUG"
+  guestready__logger__enable_log_color: True
+  guestready__db__username: ${GUESTREADY__API_POSTGRES_USER?}
+  guestready__db__password: ${GUESTREADY__API_POSTGRES_PASSWORD?}
+  guestready__db__port: "5432"
+  guestready__db__database: ${GUESTREADY__API_POSTGRES_DATABASE?}
+  guestready__db__host: "postgres"
+```
+
+- Fastapi Service
+
+```yaml
+environment:
+  guestready__fastapi__auth__user: ${GUESTREADY__API_AUTH_USER?}
+  guestready__fastapi__auth__password: ${GUESTREADY__API_AUTH_PASSWORD?}
+  guestready__fastapi__url: ${GUESTREADY__API__URL?}
+  guestready__games_url: ${GUESTREADY__GAMES__URL?}
+  guestready__logger__level: "DEBUG"
+  guestready__logger__enable_log_color: True
+```
 
 <!-- TOC --><a name="available-commands"></a>
 
