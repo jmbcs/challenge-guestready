@@ -26,21 +26,35 @@
 
 ## Requirements
 
-- Docker Compose : `v2.28.1`
-- Make : `v4.3`
+- Docker Compose: `v2.28.1`
+- Make: `v4.3`
 
 <!-- TOC --><a name="quick-start"></a>
 
-## Quick Start
+## Quick Start and Deployment
 
-1. Run `make run`
-   - Wait for services to be `healthy`(should take less than `30s` after building the images)
-2. Access Django at [http://localhost:8000](http://localhost:8000)
-3. Access FastAPI at [http://localhost:8001](http://localhost:8001)
+1. Clone this repo.
+
+   ```bash
+   git clone https://github.com/jmbcs/challenge-guestready.git
+   ```
+
+2. Run `make run`
+
+   - If `make` is **not installed**, you can use the following command instead:
+
+     ```bash
+     docker compose -f docker-compose.yml up --build -d --wait
+     ```
+
+   - Wait for services to become `healthy` (this should take less than 30s after building the images).
+
+3. Access Django at [http://localhost:8000](http://localhost:8000)
+4. Access FastAPI at [http://localhost:8001](http://localhost:8001)
    - User: `guestready`
    - Password: `test123`
 
-Watch the video below as a reference for the `Django` service + `FastAPI`
+Watch the video below as a reference for the `Django` + `FastAPI` interaction.
 
 <hr>
 <details>
@@ -66,36 +80,34 @@ Watch the video below as a reference for the `Django` service + `FastAPI`
 ### Key Features:
 
 - Each service runs in its own Docker container.
+- Each service provides logs.
 - Service configurations are managed via environment variables using `pydantic` basesettings.
 - Services communicate within the Docker network but are also exposed on the host for easy access.
 - Database migrations for PostgreSQL are handled by `alembic` integrated with `FastAPI`.
 - PostgreSQL database initialization includes setting up users and databases for the REST API service.
 
+## Avalailable commands
+
+Run `make` to check the available commands
+![Makefile](images/make_commands.png)
+
 <!-- TOC --><a name="development-environment-setup"></a>
 
-## Development Environment Setup
+## Setting Up Your Development Environment
 
-To set up your development environment, follow these steps:
+1. **Install `direnv`**: Visit [direnv.net](https://direnv.net/) and follow the installation instructions for your operating system.
 
-1. Install `direnv` from [https://direnv.net/](https://direnv.net/).
-2. Run `direnv allow` after installation.
-3. This will install all dependencies automatically.
+2. **Initialize `direnv`**: After installing `direnv`, run the command `direnv allow` in your project directory. This allows `direnv` to load the environment variables specified in `.envrc` into your shell session automatically.
 
-<!-- TOC --><a name="development-and-debugging"></a>
+3. **Automatic Dependency Installation**: Ensure all dependencies are installed automatically once `direnv` is set up.
 
 ### Development and Debugging
 
-- You can run either Django or the FastAPI API directly from the terminal for development/debugging purposes.
+- You can run either Django or FastAPI APIs directly from the terminal:
+  - **Run Django**: Execute `make dev.django` in your terminal.
+  - **Run FastAPI**: Execute `make dev.restapi` in your terminal.
 
-<!-- TOC --><a name="additional-resources"></a>
-
-### Additional Resources
-
-<!-- TOC --><a name="testing"></a>
-
-## Testing
-
-Reference the following video for guidance on using `direnv` to automatically set up your environment using the `.envrc` file
+For detailed guidance on using `direnv` and setting up your environment using the `.envrc` file, refer to the following video:
 
 <hr>
 <details>
@@ -110,7 +122,14 @@ Reference the following video for guidance on using `direnv` to automatically se
 
 <!-- TOC --><a name="video-test"></a>
 
-## Video - Test
+## Testing - Code quality
+
+To ensure comprehensive code quality, the `make tox` command performs the following tasks:
+
+1. Executes all `pytest` tests for `fastapi`, located at [services/restapi/tests](services/restapi/tests), ensuring thorough testing.
+2. Executes tests for `django`, specifically targeting tests located at [services/django/django_project/game/tests.py].
+3. Runs Pre-commit hooks across the repository to automatically enhance code formatting and perform other necessary checks.
+4. Validates proper Python code using `mypy`.
 
 <hr>
 <details>
@@ -122,3 +141,11 @@ Reference the following video for guidance on using `direnv` to automatically se
   </p>
 </details>
 <hr>
+
+## Testing - FastAPI Response Performance
+
+## Logging
+
+## PostgreSQL queries optimization
+
+## Final Remarks and Suggestions
