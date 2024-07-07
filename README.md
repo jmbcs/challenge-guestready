@@ -63,7 +63,7 @@ Watch the video below as a reference for the `Django` + `FastAPI` interaction.
     <strong>CLICK HERE</strong> to show video of Django + FastAPI.
   </summary>
   <p align="center">
-    <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/b7d6f3be-5ca6-4098-9e7b-bf01fd171bd1" controls width="640" height="360"></video>
+     <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/f4fe80d8-5a8e-4e3c-90af-3d257555db8a" controls width="640" height="360"></video>
   </p>
 </details>
 <hr>
@@ -88,6 +88,8 @@ Watch the video below as a reference for the `Django` + `FastAPI` interaction.
 - Services communicate within the Docker network but are also exposed on the host for easy access.
 - Database migrations for PostgreSQL are handled by `alembic` integrated with `FastAPI`.
 - PostgreSQL database initialization includes setting up users and databases for the REST API service.
+
+### How the services are configuired
 
 ## Available commands
 
