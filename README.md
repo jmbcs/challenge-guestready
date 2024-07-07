@@ -44,7 +44,7 @@
    git clone https://github.com/jmbcs/challenge-guestready.git
    ```
 
-2. Run `make run`
+2. Run `make up`
 
    - If `make` is **not installed**, you can use the following command instead:
 
