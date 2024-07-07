@@ -42,7 +42,7 @@ test : ## Run only tests (django and restapi pytest)  (development)
 mypy: ## Run only mypy  (development)
 	@tox -e mypy
 
-precommit :  ## Run only precommit  (development)
+precommit: ## Run only precommit  (development)
 	@tox -e pre-commit
 
 clean: ## Clean up cache and build directories (development)
