@@ -118,7 +118,7 @@ environment:
   PGDATA: /data/postgres
 ```
 
-- Django Service
+- FastAPI Service
 
 ```yaml
 environment:
@@ -134,7 +134,7 @@ environment:
   guestready__db__host: "postgres"
 ```
 
-- Fastapi Service
+- Django Service
 
 ```yaml
 environment:
