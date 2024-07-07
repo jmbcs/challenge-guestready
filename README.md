@@ -207,6 +207,22 @@ You can check the output of the command `make tox` by refering to the video belo
 
 ## Logging
 
-## PostgreSQL queries optimization
+- FastAPI service logs
+
+![FastAPI Service Logs](images/logs_api.png)
+
+- Django service logs.
+
+![Django Service Logs](images/logs_django.png)
+
+**Note**:
+You can configure the logging behavior using the following environment variables:
+
+- `guestready__logger__level`: Set the desired logging level (e.g., "DEBUG").
+- `guestready__logger__enable_log_color`: Toggle to enable or disable log coloring (e.g., True or False). (log color should be disabled if you want to store logs in files)
+
+## PostgreSQL Queries Optimization
+
+The queries have been optimized using SQLAlchemy ORM. Optimization involved setting indexes on `developer`, `release_date`, `genre`, and `platform` columns, as these are frequently used for filtering.
 
 ## Final Remarks and Suggestions
