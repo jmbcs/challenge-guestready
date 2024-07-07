@@ -63,7 +63,7 @@ Watch the video below as a reference for the `Django` + `FastAPI` interaction.
     <strong>CLICK HERE</strong> to show video of Django + FastAPI.
   </summary>
   <p align="center">
-     <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/f4fe80d8-5a8e-4e3c-90af-3d257555db8a" controls width="640" height="360"></video>
+    <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/b7d6f3be-5ca6-4098-9e7b-bf01fd171bd1" controls width="640" height="360"></video>
   </p>
 </details>
 <hr>
@@ -146,7 +146,7 @@ You can check the output of the command `make tox` by refering to the video belo
   <summary>
     <strong>CLICK HERE</strong> to show video of make tox.
   </summary>
-  <img src="images/make_commands.png" width=600 />
+   <video src="https://github.com/jmbcs/challenge-guestready/assets/112523386/f4fe80d8-5a8e-4e3c-90af-3d257555db8a" controls width="640" height="360"></video>
   </p>
 </details>
 <hr>
